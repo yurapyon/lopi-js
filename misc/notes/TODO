@@ -1,0 +1,35 @@
+find a 3d math library
+  glMatrix seems good
+
+figure out how to get shaders to be separate files
+
+fast (easy to follow) workflows are more important than automatic
+
+for "brightness of a light source" or material props, dont use 0-1 scales
+  0-100 or 0-255 are better
+
+what if you could draw UVs separatly and assign them to faces
+  works well for lopoly
+
+load data as shader params ie textures
+  kindof the 'asset' idea if that data is stored as part of the object
+
+verts can have multiple UV coords at the same location based on face
+  basically for UVs, faces need to be prioritized and you may have many verts
+  that have the same position with different uv coords
+  drawing needs to be done with index based triangle drawing
+
+keybinds
+  tool select
+    move
+    rotate
+    scale
+    extrude
+  editor settings
+    3d
+      perspective/ortho
+      wireframe, solid, rendered
+      vert/edge/face/object selection
+    animator
+    uv
+  switch between views
