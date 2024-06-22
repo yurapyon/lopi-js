@@ -1,4 +1,5 @@
-import { CanvasExt, GL } from "../3d/CanvasExt";
+import { CanvasExt } from "../gfx/CanvasExt";
+import { GL } from "../gfx/GL";
 
 export class Editor3d {
   type: "3d" = "3d";

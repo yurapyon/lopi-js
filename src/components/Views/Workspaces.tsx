@@ -8,9 +8,8 @@ import {
   mergeProps,
 } from "solid-js";
 import { Button } from "../general-ui/Button";
-import { ClassProps } from "../../lib/ClassProps";
-import { View, Workspace } from "../../lib/LopiStore";
-import { WorkspaceComponent } from "./Workspace";
+import { ClassProps } from "../../lib/utils/ClassProps";
+import { WorkspaceComponent } from "./WorkspaceComponent";
 import { useLopiStoreContext } from "../providers/LopiStoreProvider";
 
 export const Workspaces: Component<ClassProps> = (props_) => {

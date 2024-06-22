@@ -1,5 +1,5 @@
 import { Component, mergeProps } from "solid-js";
-import { ClassProps } from "../lib/ClassProps";
+import { ClassProps } from "../lib/utils/ClassProps";
 
 export const LopiLogo: Component<ClassProps> = (props_) => {
   const props = mergeProps({ class: "", classList: {} }, props_);

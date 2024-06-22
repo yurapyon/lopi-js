@@ -1,6 +1,6 @@
 import { Component, Index, Show, createSignal } from "solid-js";
-import { View } from "../../lib/LopiStore";
 import { Button } from "../general-ui/Button";
+import { View } from "../../lib/views/View";
 
 export const ViewComponent: Component<{ view: View }> = (props) => {
   const [dropdownOpen, setDropdownOpen] = createSignal(false);

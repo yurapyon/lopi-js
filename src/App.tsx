@@ -12,11 +12,9 @@ import { MenuBar } from "./components/MenuBar";
 import { SideBar } from "./components/SideBar";
 import { ToolList } from "./components/ToolBar/ToolList";
 import { Workspaces } from "./components/Views/Workspaces";
-import { View, Workspace } from "./lib/LopiStore";
 import { useLopiStoreContext } from "./components/providers/LopiStoreProvider";
 
 const App: Component = () => {
-  const commandBarAlwaysOpen = false;
   const [enteringCommand, setEnteringCommand] = createSignal(false);
 
   const store = useLopiStoreContext();
@@ -69,7 +67,9 @@ const App: Component = () => {
             {" "}
           </SideBar>
         </div>
-        <Show when={commandBarAlwaysOpen || enteringCommand()}>
+        <Show
+          when={store.getSettings().commandBarAlwaysOpen || enteringCommand()}
+        >
           <CommandBar
             enteringCommand={enteringCommand()}
             setEnteringCommand={setEnteringCommand}

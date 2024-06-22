@@ -1,23 +1,14 @@
-import { createUniqueId } from "./createUniqueId";
+import { createUniqueId } from "./utils/createUniqueId";
 import { Editor } from "./editors/Editor";
 import { createStore } from "solid-js/store";
-
-export interface Workspace {
-  id: string;
-  name: string;
-  viewIds: string[];
-  isSplit: boolean;
-}
-
-export interface View {
-  id: string;
-  editorId: string;
-}
+import { View, Workspace } from "./views/View";
+import { Settings } from "./Settings";
 
 export interface LopiStoreAPI {
   workspaces: Workspace[];
   views: View[];
   editors: Editor[];
+  settings: Settings;
 }
 
 export const createLopiStore = () => {
@@ -25,6 +16,7 @@ export const createLopiStore = () => {
     workspaces: [],
     views: [],
     editors: [],
+    settings: Settings.createDefault(),
   });
   return {
     addWorkspace: () => {
@@ -65,6 +57,12 @@ export const createLopiStore = () => {
     },
     setView: (id: string, updateObject: Partial<View>) => {
       setStore("views", (view) => view.id === id, updateObject);
+    },
+    getSettings: () => {
+      return store.settings;
+    },
+    setSettings: (updateObject: Partial<Settings>) => {
+      return setStore("settings", updateObject);
     },
   };
 };
