@@ -1,6 +1,7 @@
 import {
   Show,
   createEffect,
+  createResource,
   createSignal,
   onMount,
   type Component,
@@ -18,13 +19,12 @@ const App: Component = () => {
   const commandBarAlwaysOpen = false;
   const [enteringCommand, setEnteringCommand] = createSignal(false);
 
-  const { addWorkspace, getWorkspace } = useLopiStoreContext();
+  const store = useLopiStoreContext();
 
   onMount(() => {
-    // addEditor(new Editor3d("editor_3d"));
-    addWorkspace();
-    addWorkspace();
-    addWorkspace();
+    const w_id = store.addWorkspace();
+    const v_id = store.addView();
+    store.setWorkspace(w_id, { name: "asdf", viewIds: [v_id] });
 
     window.addEventListener("keydown", (e: KeyboardEvent) => {
       switch (e.key) {
@@ -43,23 +43,6 @@ const App: Component = () => {
   const [toolBarCollapsed, setToolBarCollapsed] = createSignal(true);
   const [heirarchyCollapsed, setHeirarchyCollapsed] = createSignal(true);
 
-  createEffect(() => {
-    // console.log(selectedToolId());
-    // console.log(selectedToolId());
-    // console.log(getEditor("editor_3d"));
-  });
-
-  const [workspaces, setWorkspaces] = createSignal<Workspace[]>([
-    { id: "asdf1", name: "asdf1", viewIds: ["view1"], isSplit: false },
-    { id: "asdf2", name: "asdf2", viewIds: ["view2"], isSplit: false },
-    { id: "asdf3", name: "asdf3", viewIds: [], isSplit: false },
-  ]);
-
-  const [views, setViews] = createSignal<View[]>([
-    { id: "view1", editorId: "" },
-    { id: "view2", editorId: "" },
-  ]);
-
   return (
     <div class="text-white bg-lopi-grey w-screen h-screen overflow-clip font-[VGA8x14] text-lg">
       <div class="flex flex-col h-full">
@@ -74,7 +57,7 @@ const App: Component = () => {
           </SideBar>
 
           <div class="grow min-w-0 h-full">
-            <Workspaces class="h-full" views={views()} setViews={setViews} />
+            <Workspaces class="h-full" />
           </div>
 
           <SideBar

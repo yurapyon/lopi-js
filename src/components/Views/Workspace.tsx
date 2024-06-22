@@ -7,7 +7,7 @@ export const WorkspaceComponent: Component<{
   workspace: Workspace;
   setWorkspace: (workspace: Workspace) => void;
   views: View[];
-  setViews: Setter<View[]>;
+  // setViews: Setter<View[]>;
 }> = (props) => {
   const [isSplitView, setIsSplitView] = createSignal(false);
 
@@ -20,9 +20,11 @@ export const WorkspaceComponent: Component<{
       ...props.workspace,
       viewIds: [...props.workspace.viewIds, newView.id],
     });
+    /*
     props.setViews((pastViews) => {
       return [...pastViews, newView];
     });
+    */
     setIsSplitView(true);
   };
 

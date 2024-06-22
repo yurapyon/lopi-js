@@ -1,4 +1,4 @@
-import { createUniqueId } from "solid-js";
+import { createUniqueId } from "./createUniqueId";
 import { Editor } from "./editors/Editor";
 import { createStore } from "solid-js/store";
 
@@ -28,8 +28,8 @@ export const createLopiStore = () => {
   });
   return {
     addWorkspace: () => {
-      const newWorkspace = {
-        id: createUniqueId(),
+      const newWorkspace: Workspace = {
+        id: createUniqueId("workspace"),
         name: "",
         viewIds: [],
         isSplit: false,
@@ -48,6 +48,23 @@ export const createLopiStore = () => {
     },
     getWorkspace: (id: string) => {
       return store.workspaces.find((workspace) => workspace.id === id);
+    },
+    setWorkspace: (id: string, updateObject: Partial<Workspace>) => {
+      setStore("workspaces", (workspace) => workspace.id === id, updateObject);
+    },
+    getViews: () => {
+      return store.views;
+    },
+    addView: () => {
+      const newView: View = {
+        id: createUniqueId("view"),
+        editorId: "",
+      };
+      setStore("views", store.views.length, newView);
+      return newView.id;
+    },
+    setView: (id: string, updateObject: Partial<View>) => {
+      setStore("views", (view) => view.id === id, updateObject);
     },
   };
 };

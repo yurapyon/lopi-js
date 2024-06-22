@@ -13,16 +13,18 @@ import { View, Workspace } from "../../lib/LopiStore";
 import { WorkspaceComponent } from "./Workspace";
 import { useLopiStoreContext } from "../providers/LopiStoreProvider";
 
-export const Workspaces: Component<
-  {
-    views: View[];
-    setViews: Setter<View[]>;
-  } & ClassProps
-> = (props_) => {
+export const Workspaces: Component<ClassProps> = (props_) => {
   const props = mergeProps({ class: "", classList: {} }, props_);
 
-  const { addWorkspace, removeWorkspace, getWorkspaces, getWorkspace } =
-    useLopiStoreContext();
+  const {
+    addWorkspace,
+    removeWorkspace,
+    getWorkspaces,
+    getWorkspace,
+    setWorkspace,
+    getViews,
+    addView,
+  } = useLopiStoreContext();
 
   const [currentWorkspaceId, setCurrentWorkspaceId] = createSignal<
     string | null
@@ -33,7 +35,7 @@ export const Workspaces: Component<
     return (currentId && getWorkspace(currentId)) || null;
   };
   const workspaceViews = () =>
-    props.views.filter((view) => {
+    getViews().filter((view) => {
       const currentWorkspace = maybeCurrentWorkspace();
       if (currentWorkspace) {
         return currentWorkspace.viewIds.some((viewId) => viewId === view.id);
@@ -58,7 +60,7 @@ export const Workspaces: Component<
                   onClick={() => setCurrentWorkspaceId(workspace.id)}
                   variant="light"
                 >
-                  {workspace.id}
+                  {workspace.name}
                 </Button>
                 <Button
                   class="px-[1ch]"
@@ -72,7 +74,17 @@ export const Workspaces: Component<
             );
           }}
         </For>
-        <Button class="px-[1ch]" onClick={addWorkspace}>
+        <Button
+          class="px-[1ch]"
+          onClick={() => {
+            const newWorkspaceId = addWorkspace();
+            const newViewId = addView();
+            setWorkspace(newWorkspaceId, {
+              name: "New workspace",
+              viewIds: [newViewId],
+            });
+          }}
+        >
           +
         </Button>
       </div>
@@ -85,7 +97,6 @@ export const Workspaces: Component<
                 console.log(workspace);
               }}
               views={workspaceViews()}
-              setViews={props.setViews}
             />
           )}
         </Show>
