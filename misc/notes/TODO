@@ -38,3 +38,31 @@ keybinds
   everything is in tables with the weird clear border
   links are blue underline
   times new roman
+
+'vertex groups'
+  used for
+    per-vertex material
+    vertex groups for selection
+    bones/weights
+  can be solved by just using separate objects for things
+    let users edit multiple objects at once
+
+treat the editor camera as an actual in-scene camera
+
+'modifiers'
+  i only ever use mirror
+    possibly 'array' (with the origin point)
+  why would you need modifiers if theres geometry nodes now
+
+  mirror is a tool setting
+
+for now dont worry about custom shaders
+
+3d editor
+  scene data shouldnt be put in a store
+    reactivity can be built into the editor, or the component
+      editor->ui
+        actions done in the editor can trigger signals
+        take into account currently selected objects
+      ui->editor
+        these can be derived setters that set UI state and editor state
