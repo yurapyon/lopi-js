@@ -14,7 +14,7 @@ export class Editor3d {
     // this.setContainer(container);
     CanvasExt.clear(this.canvas);
 
-    const gl = this.canvas.getContext("webgl");
+    const gl = this.canvas.getContext("webgl2");
     if (gl) {
       const tex = GL.makeTexture(gl, 10, 10);
       console.log(tex);

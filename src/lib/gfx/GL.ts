@@ -3,7 +3,7 @@ export namespace GL {
   const SIZE_OF_FLOAT = 4;
 
   export const makeTexture = (
-    gl: WebGLRenderingContext,
+    gl: WebGL2RenderingContext,
     width: number,
     height: number
   ) => {
@@ -25,7 +25,7 @@ export namespace GL {
   };
 
   export const makeProgram = (
-    gl: WebGLRenderingContext,
+    gl: WebGL2RenderingContext,
     vertString: string,
     fragString: string
   ) => {

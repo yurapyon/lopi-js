@@ -1,16 +1,8 @@
 import { vec2, vec3 } from "gl-matrix";
 
-// NOTE UVVertices, edges, tris can just be created on unwrap
-
 export interface Vertex {
   position: vec3;
   parentEdge: Edge | null;
-  linkedUVVertices: UVVertex[];
-}
-
-export interface UVVertex {
-  position: vec2;
-  linkedVertex: Vertex;
 }
 
 export namespace Vertex {
@@ -18,25 +10,18 @@ export namespace Vertex {
     return {
       position,
       parentEdge: null,
-      linkedUVVertices: [],
     };
   };
 }
 
 export type Edge = [Vertex, Vertex] & {
   floatingVertices: Vertex[];
-  linkedUVEdges: UVEdge[];
-};
-
-export type UVEdge = [UVVertex, UVVertex] & {
-  linkedEdge: Edge;
 };
 
 export namespace Edge {
   export const create = (vertex1: Vertex, vertex2: Vertex): Edge => {
     const ret = [vertex1, vertex2] as Edge;
     ret.floatingVertices = [];
-    ret.linkedUVEdges = [];
     return ret;
   };
 
@@ -78,14 +63,6 @@ export type Tri = [Vertex, Vertex, Vertex] & {
   edge01: Edge;
   edge12: Edge;
   edge20: Edge;
-  linkedUVTris: UVTri[];
-};
-
-export type UVTri = [UVVertex, UVVertex, UVVertex] & {
-  edge01: UVEdge;
-  edge12: UVEdge;
-  edge20: UVEdge;
-  linkedTri: Tri;
 };
 
 export namespace Tri {
@@ -98,7 +75,6 @@ export namespace Tri {
     ret.edge01 = Edge.create(vertex1, vertex2);
     ret.edge12 = Edge.create(vertex2, vertex3);
     ret.edge20 = Edge.create(vertex3, vertex1);
-    ret.linkedUVTris = [];
     return ret;
   };
 
@@ -118,18 +94,24 @@ export namespace Tri {
   };
 }
 
+// NOTE
+// UV tris use the same vertex type as geo tris even though they are 2d
+//   (z value is ignored)
+//   this makes structuring the code easier but
+//     uses more memory
+//       (uv tri positions are technically vec2s instead of vec3s)
+//     assumes math for vec3s works the same as its vec2 counterparts if vec3.z === 0
+//       // TODO look into this
+export interface TriWithUVs {
+  geo: Tri;
+  uvs: Tri[];
+}
+
 export interface Geometry {
   vertices: Vertex[];
   edges: Edge[];
-  tris: Tri[];
-  UVMeshes: UVGeometry[];
-}
-
-export interface UVGeometry {
-  vertices: UVVertex[];
-  edges: UVEdge[];
-  tris: UVTri[];
-  linkedGeometry: Geometry;
+  tris: TriWithUVs[];
+  uvMapIds: string[];
 }
 
 export namespace Geometry {

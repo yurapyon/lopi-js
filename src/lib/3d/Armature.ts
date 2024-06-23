@@ -1,8 +1,8 @@
-import { mat4 } from "gl-matrix";
 import { Geometry, Vertex } from "./Geometry";
+import { Transform } from "./Transform";
 
 export interface Bone {
-  matrix: mat4;
+  transform: Transform;
   parent: Bone | null;
   weights: [Vertex, number][];
 }

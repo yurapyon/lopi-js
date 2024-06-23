@@ -2,7 +2,6 @@ import { GL } from "../gfx/GL";
 
 export interface Material {
   program: WebGLProgram;
-
   locations: {
     model: WebGLUniformLocation | null;
     view: WebGLUniformLocation | null;
@@ -12,7 +11,7 @@ export interface Material {
 
 export namespace Material {
   export const create = (
-    gl: WebGLRenderingContext,
+    gl: WebGL2RenderingContext,
     vertString: string,
     fragString: string
   ): Material => {

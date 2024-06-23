@@ -1,10 +1,9 @@
-import { mat4, quat, vec3 } from "gl-matrix";
+import { mat4 } from "gl-matrix";
 import { Camera } from "./Camera";
 import { Geometry } from "./Geometry";
 import { Mesh } from "./Mesh";
 import { Material } from "./Material";
 import { SkinnedGeometry } from "./Armature";
-import { Accessor, Setter } from "solid-js";
 import { createUniqueId } from "../utils/createUniqueId";
 import { Transform } from "./Transform";
 
@@ -52,7 +51,7 @@ export interface SceneMesh extends ISceneObject {
 }
 
 export namespace SceneMesh {
-  export const render = (gl: WebGLRenderingContext, sceneMesh: SceneMesh) => {
+  export const render = (gl: WebGL2RenderingContext, sceneMesh: SceneMesh) => {
     gl.useProgram(sceneMesh.material.program);
 
     gl.uniformMatrix4fv(
@@ -62,7 +61,7 @@ export namespace SceneMesh {
     );
 
     gl.bindBuffer(gl.ARRAY_BUFFER, sceneMesh.mesh.vao);
-    gl.drawElements(gl.TRIANGLES, sceneMesh.mesh.faceCount, gl.UNSIGNED_INT, 0);
+    gl.drawElements(gl.TRIANGLES, sceneMesh.mesh.triCount, gl.UNSIGNED_INT, 0);
   };
 }
 
@@ -127,7 +126,7 @@ export namespace Scene {
   };
 
   export const render = (
-    gl: WebGLRenderingContext,
+    gl: WebGL2RenderingContext,
     scene: Scene,
     camera: SceneCamera
   ) => {

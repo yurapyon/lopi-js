@@ -1,6 +1,5 @@
 import { mat4 } from "gl-matrix";
 import { degreesToRadians } from "../utils/math";
-import { Accessor, Setter } from "solid-js";
 
 export type CameraType = "perspective" | "orthographic";
 
