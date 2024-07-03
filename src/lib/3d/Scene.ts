@@ -9,6 +9,7 @@ import { Transform } from "./Transform";
 
 export interface ISceneObject {
   id: string;
+  name: string;
   parent: SceneObject | null;
   children: SceneObject[];
   isActive: boolean;
@@ -19,10 +20,11 @@ export interface ISceneObject {
 
 export namespace ISceneObject {
   export const create = (): ISceneObject => {
-    const transform = Transform.create();
+    const transform = Transform.identity();
     const worldMatrix = mat4.create();
     return {
       id: createUniqueId("scene-object"),
+      name: "object",
       parent: null,
       children: [],
       isActive: true,
@@ -86,29 +88,41 @@ export type SceneObject =
   | SceneCamera;
 export type SceneObjectType = SceneObject["type"];
 
+export namespace SceneObject {
+  export const setParent = (parent: SceneObject, child: SceneObject) => {
+    parent.children.push(child);
+
+    if (child.parent) {
+      const childIdx = child.parent.children.findIndex(
+        (sibling) => sibling.id === child.id
+      );
+      child.parent.children.splice(childIdx, 1);
+    }
+
+    child.parent = parent;
+  };
+}
+
 export interface Scene {
+  id: string;
+  name: string;
   root: SceneRoot;
   sceneObjects: SceneObject[];
 }
 
 export namespace Scene {
   export const create = (): Scene => {
-    const sceneObject = ISceneObject.create();
-    const root = sceneObject as SceneRoot;
-    root.type = "root";
+    const root: SceneRoot = {
+      ...ISceneObject.create(),
+      type: "root",
+      name: "root",
+    };
     return {
+      id: createUniqueId("scene"),
+      name: "scene",
       root,
       sceneObjects: [],
     };
-  };
-
-  export const addChild = (
-    scene: Scene,
-    parent: SceneObject,
-    sceneObject: SceneObject
-  ) => {
-    parent.children.push(sceneObject);
-    scene.sceneObjects.push(sceneObject);
   };
 
   const updateTransforms = (scene: Scene) => {
@@ -131,6 +145,11 @@ export namespace Scene {
     camera: SceneCamera
   ) => {
     updateTransforms(scene);
+
+    // const projectionMatrix = mat4.create();
+    // Camera.toMatrix(projectionMatrix, camera.camera);
+
+    // TODO for a given material we have to update the camera related uniforms
 
     for (const currentObject of scene.sceneObjects) {
       switch (currentObject.type) {

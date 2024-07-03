@@ -6,32 +6,25 @@ export type CameraType = "perspective" | "orthographic";
 export interface Camera {
   type: CameraType;
   fovDegrees: number;
-  width: number;
-  height: number;
-  matrix: mat4;
 }
 
 export namespace Camera {
-  export const createPerspective = (
-    fovDegrees: number,
+  export const toMatrix = (
+    out: mat4,
+    camera: Camera,
     width: number,
     height: number
-  ): Camera => {
-    const matrix = mat4.create();
-    // TODO just write this myself ?
-    mat4.perspective(
-      matrix,
-      degreesToRadians(fovDegrees),
-      width / height,
-      0,
-      Infinity
-    );
-    return {
-      type: "perspective",
-      fovDegrees,
-      width,
-      height,
-      matrix,
-    };
+  ) => {
+    if (camera.type === "perspective") {
+      mat4.perspective(
+        out,
+        degreesToRadians(camera.fovDegrees),
+        width / height,
+        0,
+        Infinity
+      );
+    } else {
+      throw "unimplemented";
+    }
   };
 }

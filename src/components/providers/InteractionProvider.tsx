@@ -10,8 +10,10 @@ import {
 interface InteractionState {
   selectedToolId: Accessor<string | null>;
   setSelectedToolId: Setter<string | null>;
-  selectedViewId: Accessor<string | null>;
-  setSelectedViewId: Setter<string | null>;
+  selectedEditorId: Accessor<string | null>;
+  setSelectedEditorId: Setter<string | null>;
+  selectedSceneObjectIds: Accessor<string[]>;
+  setSelectedSceneObjectIds: Setter<string[]>;
 }
 
 const InteractionStateContext = createContext<InteractionState>();
@@ -26,13 +28,20 @@ export const useInteractionStateContext = () => {
 
 export const InteractionStateProvider: ParentComponent = (props) => {
   const [selectedToolId, setSelectedToolId] = createSignal<string | null>(null);
-  const [selectedViewId, setSelectedViewId] = createSignal<string | null>(null);
+  const [selectedEditorId, setSelectedEditorId] = createSignal<string | null>(
+    null
+  );
+  const [selectedSceneObjectIds, setSelectedSceneObjectIds] = createSignal<
+    string[]
+  >([]);
 
   const interactionStateContext = {
     selectedToolId,
     setSelectedToolId,
-    selectedViewId,
-    setSelectedViewId,
+    selectedEditorId,
+    setSelectedEditorId,
+    selectedSceneObjectIds,
+    setSelectedSceneObjectIds,
   };
   return (
     <InteractionStateContext.Provider value={interactionStateContext}>

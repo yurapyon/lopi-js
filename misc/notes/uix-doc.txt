@@ -1,0 +1,45 @@
+blue buttons are for things that are currently active but not for long
+red is for links
+
+certain words should be capitalized because all lowercase is hipster and unprofessional
+
+keybinds
+  tool select
+    move
+    rotate
+    scale
+    extrude
+  tool settings
+    mirror
+  editor settings
+    3d
+      perspective/ortho
+      wireframe, solid, rendered
+      vert/edge/face/object selection
+    animator
+    uv
+  switch between views
+
+treat the editor camera as an actual in-scene camera
+
+for "brightness of a light source" or material props, dont use 0-1 scales
+  0-100 or 0-255 are better
+
+apex style mousewheel thing
+
+instead of an inspector as a component on the sidebar
+could pop up 'fine tune position/rotation/scale' inputs
+  either
+    - in a status bar
+    - a popup on top of the 3d editor itself
+    - in the heiarchy itself as a subcomponent of each scene object
+      root
+        camera
+          position
+          rotation
+          scale
+          ...etc...
+        mesh
+
+      could 'pin' rows so they show up in thier own section at the top
+      could be useful for animations if you could select vec3s from the heiarchy view

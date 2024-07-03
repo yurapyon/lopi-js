@@ -11,18 +11,32 @@ import { CommandBar } from "./components/CommandBar";
 import { MenuBar } from "./components/MenuBar";
 import { SideBar } from "./components/SideBar";
 import { ToolList } from "./components/ToolBar/ToolList";
-import { Workspaces } from "./components/Views/Workspaces";
+import { Workspaces } from "./components/workspaces/Workspaces";
 import { useLopiStoreContext } from "./components/providers/LopiStoreProvider";
+import { useInteractionStateContext } from "./components/providers/InteractionProvider";
+import { DataLists } from "./components/DataLists/DataLists";
+import { Scene } from "./lib/3d/Scene";
+import { Editor3d } from "./lib/editors/Editor";
 
 const App: Component = () => {
   const [enteringCommand, setEnteringCommand] = createSignal(false);
 
   const store = useLopiStoreContext();
+  const { selectedEditorId } = useInteractionStateContext();
 
   onMount(() => {
+    const internalScene = Scene.create();
+    internalScene.name = "internal";
+    store.addScene(internalScene);
+
     const w_id = store.addWorkspace();
-    const v_id = store.addView();
-    store.setWorkspace(w_id, { name: "asdf", viewIds: [v_id] });
+    const e_id = store.addEditor({
+      ...Editor3d.create(),
+    });
+    store.setWorkspace(w_id, { name: "asdf", editorIds: [e_id] });
+
+    store.addScene(Scene.create());
+    store.addScene(Scene.create());
 
     window.addEventListener("keydown", (e: KeyboardEvent) => {
       switch (e.key) {
@@ -36,6 +50,10 @@ const App: Component = () => {
           break;
       }
     });
+  });
+
+  createEffect(() => {
+    console.log(selectedEditorId());
   });
 
   const [toolBarCollapsed, setToolBarCollapsed] = createSignal(true);
@@ -64,7 +82,7 @@ const App: Component = () => {
             collapseLeft={false}
             classList={{ "shrink-0": true }}
           >
-            {" "}
+            <DataLists class="text-base text-lopi-grey-extra-light" />
           </SideBar>
         </div>
         <Show

@@ -1,14 +1,38 @@
-find a 3d math library
-  glMatrix seems good
-
 figure out how to get shaders to be separate files
 
-fast (easy to follow) workflows are more important than automatic
+desktop app
+  options
+    electron
+      requires some setup
+    react native
+      is react
+    tauri
+      not super mature
+    just do it in zig
+      long setup time and slower development
+  desktop app has better integration with OS
+    filesystem
+      for a 'normal' save/load experience, cloud saving would be nice
+    integrate with existing tools
 
-for "brightness of a light source" or material props, dont use 0-1 scales
-  0-100 or 0-255 are better
+in-app ways to get around needing to save to desktop
+  render to png
+  vrc model testing/demoing
+    animation
+    physics
+  gamey stuff
+    scripting/basic user interaction
+    shaders with live inputs
+    scene management
 
-what if you could draw UVs separatly and assign them to faces
+! we don't want to reinvent peoples external tools in our own app !
+  that sucks and makes the app feel cheap
+
+for heiarchy can just go through editors and add 3d editor cameras to a separate section
+    
+---
+
+what if you could draw UVs separately and assign them to faces
   works well for lopoly
 
 load data as shader params ie textures
@@ -16,23 +40,8 @@ load data as shader params ie textures
 
 verts can have multiple UV coords at the same location based on face
   basically for UVs, faces need to be prioritized and you may have many verts
-  that have the same position with different uv coords
+    that have the same position with different uv coords
   drawing needs to be done with index based triangle drawing
-
-keybinds
-  tool select
-    move
-    rotate
-    scale
-    extrude
-  editor settings
-    3d
-      perspective/ortho
-      wireframe, solid, rendered
-      vert/edge/face/object selection
-    animator
-    uv
-  switch between views
 
 'vertex groups'
   used for
@@ -41,8 +50,6 @@ keybinds
     bones/weights
   can be solved by just using separate objects for things
     let users edit multiple objects at once
-
-treat the editor camera as an actual in-scene camera
 
 'modifiers'
   i only ever use mirror

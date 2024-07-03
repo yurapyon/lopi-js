@@ -1,17 +1,18 @@
 import { Component, Setter, createEffect, createSignal } from "solid-js";
 import { Button } from "../general-ui/Button";
-import { ViewComponent } from "./ViewComponent";
-import { View, Workspace } from "../../lib/views/View";
+import { Workspace } from "../../lib/views/View";
+import { View } from "./View";
 
 export const WorkspaceComponent: Component<{
   workspace: Workspace;
   setWorkspace: (workspace: Workspace) => void;
-  views: View[];
+  // views: View[];
   // setViews: Setter<View[]>;
 }> = (props) => {
   const [isSplitView, setIsSplitView] = createSignal(false);
 
   const splitWorkspace = () => {
+    /*
     const newView: View = {
       id: "new",
       editorId: "new",
@@ -20,7 +21,7 @@ export const WorkspaceComponent: Component<{
       ...props.workspace,
       viewIds: [...props.workspace.viewIds, newView.id],
     });
-    /*
+
     props.setViews((pastViews) => {
       return [...pastViews, newView];
     });
@@ -31,8 +32,9 @@ export const WorkspaceComponent: Component<{
   return (
     <div class="flex flex-col h-full">
       <div class="grow min-h-0 bg-black">
-        <ViewComponent view={props.views[0]} />
+        <View editorId={props.workspace.editorIds[0]} />
       </div>
+      {/*
       <div class="flex flex-row justify-center bg-lopi-grey">
         <Button
           class="text-base px-[1ch]"
@@ -46,6 +48,7 @@ export const WorkspaceComponent: Component<{
           {isSplitView() ? "unsplit" : "split"}
         </Button>
       </div>
+       */}
     </div>
   );
 };

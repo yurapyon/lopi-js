@@ -1,0 +1,21 @@
+use cases
+  rendering scenes/art
+  making models for vrchat/vtuber models
+  making assets for games
+    models, shaders
+    potentially could be used as a scene editor
+
+driving ideas
+  make 3d as easy as 2d
+    obvious to use
+    focused workflow and UI
+  good documentation (in-app ?)
+  start business with something good
+    move on to
+      maru              (video art/motion graphics editor)
+      flash replacement (big project but cool)
+
+---
+
+fast (easy to follow) workflows are more important than automated
+
