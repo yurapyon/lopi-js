@@ -1,7 +1,3 @@
-// import { Editor3d } from "./Editor3d";
-// import { EditorAnimation } from "./EditorAnimation";
-// import { EditorUV } from "./EditorUV";
-
 import { ISceneObject, SceneCamera, SceneObject } from "../3d/Scene";
 import { createUniqueId } from "../utils/createUniqueId";
 

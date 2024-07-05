@@ -1,15 +1,8 @@
-import {
-  Component,
-  Index,
-  JSX,
-  Show,
-  createSignal,
-  mergeProps,
-} from "solid-js";
+import { Component, Index, JSX, Show, createSignal } from "solid-js";
 import { Button } from "../general-ui/Button";
 import { SceneHeirarchy } from "./SceneHeirarchy";
 import { useLopiStoreContext } from "../providers/LopiStoreProvider";
-import { ClassProps } from "../../lib/utils/ClassProps";
+import { ClassProps, setupClassProps } from "../../lib/utils/ClassProps";
 
 const ListGroup: Component<{ title: string; children?: JSX.Element }> = (
   props
@@ -36,14 +29,11 @@ const ListGroup: Component<{ title: string; children?: JSX.Element }> = (
 };
 
 export const DataLists: Component<ClassProps> = (props_) => {
-  const props = mergeProps({ class: "", classList: {} }, props_);
+  const { classes } = setupClassProps(props_);
 
   const { getScenes } = useLopiStoreContext();
   return (
-    <div
-      class={["flex flex-col w-full", props.class].join(" ")}
-      classList={{ ...props.classList }}
-    >
+    <div class="flex flex-col w-full" classList={classes}>
       <ListGroup title="data">expanded</ListGroup>
       <Index each={getScenes()}>
         {(scene) => {

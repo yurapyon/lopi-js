@@ -1,6 +1,6 @@
 import { createUniqueId } from "./utils/createUniqueId";
 import { Editor, Editor3d, EditorAnimation, EditorUV } from "./editors/Editor";
-import { createStore } from "solid-js/store";
+import { createStore, produce } from "solid-js/store";
 import { Workspace } from "./views/View";
 import { Settings } from "./Settings";
 import { Scene } from "./3d/Scene";
@@ -71,6 +71,9 @@ export const createLopiStore = () => {
     },
     getScene: (id: string) => {
       return store.scenes.find((scene) => scene.id === id);
+    },
+    produceScene: (id: string, mutateFn: (scene: Scene) => void) => {
+      setStore("scenes", (scene) => scene.id === id, produce(mutateFn));
     },
     getSettings: () => {
       return store.settings;

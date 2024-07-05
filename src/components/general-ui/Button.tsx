@@ -1,4 +1,5 @@
-import { ParentComponent, mergeProps, splitProps } from "solid-js";
+import { ParentComponent } from "solid-js";
+import { ClassProps, setupClassProps } from "../../lib/utils/ClassProps";
 
 interface VariantInfo {
   selected: string;
@@ -22,24 +23,30 @@ const variants: { [k: string]: VariantInfo } = {
 
 export type ButtonVariant = "light" | "default";
 
-export const Button: ParentComponent<{
-  class?: string;
-  classList?: { [k: string]: boolean | undefined };
+export interface ButtonProps extends ClassProps {
   selected?: boolean;
   variant?: ButtonVariant;
   onClick: (e: MouseEvent) => void;
-}> = (props_) => {
-  const props = mergeProps({ selected: false, variant: "default" }, props_);
+}
+
+export const Button: ParentComponent<ButtonProps> = (props_) => {
+  const { props, classes } = setupClassProps(
+    {
+      selected: false,
+      variant: "default",
+    },
+    props_
+  );
 
   const variant = () => variants[props.variant];
 
   return (
     <button
-      class={["select-none", props.class].join(" ")}
+      class="select-none"
       classList={{
+        ...classes,
         [variant().selected]: props.selected,
         [variant().deselected]: !props.selected,
-        ...props.classList,
       }}
       onClick={props.onClick}
     >

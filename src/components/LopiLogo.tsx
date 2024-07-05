@@ -1,8 +1,8 @@
-import { Component, mergeProps } from "solid-js";
-import { ClassProps } from "../lib/utils/ClassProps";
+import { Component } from "solid-js";
+import { ClassProps, setupClassProps } from "../lib/utils/ClassProps";
 
 export const LopiLogo: Component<ClassProps> = (props_) => {
-  const props = mergeProps({ class: "", classList: {} }, props_);
+  const { classes } = setupClassProps(props_);
   /*
   const oldSvg =
     "M525,570 L525,570 L525,780 L660,780 L660,705 L600,690 L585,540 L525,570 M750,540 L750,540 L675,570 L690,780 L825,780 L810,540 L750,540 M840,540 L840,540 L855,780 L900,780 L900,735 L990,705 L975,585 L840,540 M1005,660 L1005,660 L1020,615 L1110,630 L1110,780 L1050,780 L1050,690 L1005,660 M1050,585 L1050,585 L1110,600 L1110,540 L1050,540 L1050,585";
@@ -25,8 +25,7 @@ export const LopiLogo: Component<ClassProps> = (props_) => {
 
   return (
     <svg
-      class={props.class}
-      classList={props.classList}
+      classList={classes}
       xmlns="http://www.w3.org/2000/svg"
       baseProfile="full"
       version="1.1"

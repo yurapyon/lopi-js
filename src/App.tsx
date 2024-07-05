@@ -15,7 +15,7 @@ import { Workspaces } from "./components/workspaces/Workspaces";
 import { useLopiStoreContext } from "./components/providers/LopiStoreProvider";
 import { useInteractionStateContext } from "./components/providers/InteractionProvider";
 import { DataLists } from "./components/DataLists/DataLists";
-import { Scene } from "./lib/3d/Scene";
+import { Scene, SceneCamera, SceneObject } from "./lib/3d/Scene";
 import { Editor3d } from "./lib/editors/Editor";
 
 const App: Component = () => {
@@ -28,6 +28,10 @@ const App: Component = () => {
     const internalScene = Scene.create();
     internalScene.name = "internal";
     store.addScene(internalScene);
+
+    const e3d = Editor3d.create();
+    SceneObject.setParent(internalScene.root, e3d.camera);
+    internalScene.sceneObjects.push(e3d.camera);
 
     const w_id = store.addWorkspace();
     const e_id = store.addEditor({
@@ -53,7 +57,7 @@ const App: Component = () => {
   });
 
   createEffect(() => {
-    console.log(selectedEditorId());
+    //console.log( (store.getScenes()[0].sceneObjects[0] as SceneCamera).camera.type);
   });
 
   const [toolBarCollapsed, setToolBarCollapsed] = createSignal(true);
@@ -82,7 +86,7 @@ const App: Component = () => {
             collapseLeft={false}
             classList={{ "shrink-0": true }}
           >
-            <DataLists class="text-base text-lopi-grey-extra-light" />
+            <DataLists class="text-base" />
           </SideBar>
         </div>
         <Show

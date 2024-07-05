@@ -1,23 +1,13 @@
-import {
-  Component,
-  Show,
-  createEffect,
-  createSignal,
-  mergeProps,
-} from "solid-js";
-import { ClassProps } from "../../lib/utils/ClassProps";
+import { Component, Show, createEffect, createSignal } from "solid-js";
+import { ClassProps, setupClassProps } from "../../lib/utils/ClassProps";
 import { WorkspaceComponent } from "./WorkspaceComponent";
 import { useLopiStoreContext } from "../providers/LopiStoreProvider";
 import { WorkspaceTabBar } from "./WorkspaceTabBar";
 
 export const Workspaces: Component<ClassProps> = (props_) => {
-  const props = mergeProps({ class: "", classList: {} }, props_);
+  const { classes } = setupClassProps(props_);
 
   const { getWorkspace, getWorkspaces } = useLopiStoreContext();
-
-  createEffect(() => {
-    console.log(getWorkspaces()[0].id);
-  });
 
   const [currentWorkspaceId, setCurrentWorkspaceId] = createSignal<
     string | null
@@ -26,6 +16,14 @@ export const Workspaces: Component<ClassProps> = (props_) => {
     const currentId = currentWorkspaceId();
     return (currentId && getWorkspace(currentId)) || null;
   };
+
+  createEffect(() => {
+    const availableId = getWorkspaces()[0]?.id;
+    if (!currentWorkspaceId() && availableId) {
+      setCurrentWorkspaceId(availableId);
+    }
+  });
+
   /*
   const workspaceViews = () =>
     getViews().filter((view) => {
@@ -39,10 +37,7 @@ export const Workspaces: Component<ClassProps> = (props_) => {
     */
 
   return (
-    <div
-      class={["flex flex-col", props.class].join(" ")}
-      classList={{ ...props.classList }}
-    >
+    <div class="flex flex-col" classList={classes}>
       <WorkspaceTabBar
         currentWorkspaceId={currentWorkspaceId()}
         setCurrentWorkspaceId={setCurrentWorkspaceId}
