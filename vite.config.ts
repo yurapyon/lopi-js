@@ -19,7 +19,7 @@ export default defineConfig({
     alias: {
       "@globals": path.resolve(__dirname, "./src/globals/"),
       "@lib": path.resolve(__dirname, "./src/lib/"),
-      "@utils": path.resolve(__dirname, "./@utils/"),
+      "@utils": path.resolve(__dirname, "./src/utils/"),
     },
   },
   build: {

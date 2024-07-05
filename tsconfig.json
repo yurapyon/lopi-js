@@ -13,9 +13,9 @@
     "isolatedModules": true,
     "baseUrl": ".",
     "paths": {
-      "@globals/*": ["src/globals/*"],
-      "@lib/*": ["src/lib/*"],
-      "@utils/*": ["src/utils/*"]
+      "@globals/*": ["./src/globals/*"],
+      "@lib/*": ["./src/lib/*"],
+      "@utils/*": ["./src/utils/*"]
     }
   }
 }
