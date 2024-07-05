@@ -1,5 +1,5 @@
 import { Component, Show, createEffect, createSignal } from "solid-js";
-import { ClassProps, setupClassProps } from "src/utils/ClassProps";
+import { ClassProps, setupClassProps } from "@utils/ClassProps";
 import { WorkspaceComponent } from "./WorkspaceComponent";
 import { useLopiStoreContext } from "../providers/LopiStoreProvider";
 import { WorkspaceTabBar } from "./WorkspaceTabBar";

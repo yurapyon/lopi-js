@@ -1,5 +1,5 @@
 import { Component, JSX } from "solid-js";
-import { ClassProps, setupClassProps } from "src/utils/ClassProps";
+import { ClassProps, setupClassProps } from "@utils/ClassProps";
 import { Vec3Data } from "../MathData/Vec3Data";
 import { Transform } from "@lib/3d/Transform";
 

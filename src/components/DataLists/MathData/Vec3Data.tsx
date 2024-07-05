@@ -1,6 +1,6 @@
 import { vec3 } from "gl-matrix";
 import { Component } from "solid-js";
-import { ClassProps, setupClassProps } from "src/utils/ClassProps";
+import { ClassProps, setupClassProps } from "@utils/ClassProps";
 
 export const Vec3Data: Component<
   {

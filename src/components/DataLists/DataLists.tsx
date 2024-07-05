@@ -2,7 +2,7 @@ import { Component, Index, JSX, Show, createSignal } from "solid-js";
 import { Button } from "../general-ui/Button";
 import { SceneHeirarchy } from "./SceneHeirarchy";
 import { useLopiStoreContext } from "../providers/LopiStoreProvider";
-import { ClassProps, setupClassProps } from "src/utils/ClassProps";
+import { ClassProps, setupClassProps } from "@utils/ClassProps";
 
 const ListGroup: Component<{ title: string; children?: JSX.Element }> = (
   props

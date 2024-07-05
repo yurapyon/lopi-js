@@ -4,7 +4,7 @@ import { Geometry } from "./Geometry";
 import { Mesh } from "./Mesh";
 import { Material } from "./Material";
 import { SkinnedGeometry } from "./Armature";
-import { createUniqueId } from "src/utils/createUniqueId";
+import { createUniqueId } from "@utils/createUniqueId";
 import { Transform } from "./Transform";
 
 export interface ISceneObject {

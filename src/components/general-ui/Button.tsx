@@ -1,5 +1,5 @@
 import { ParentComponent } from "solid-js";
-import { ClassProps, setupClassProps } from "src/utils/ClassProps";
+import { ClassProps, setupClassProps } from "@utils/ClassProps";
 
 interface VariantInfo {
   selected: string;

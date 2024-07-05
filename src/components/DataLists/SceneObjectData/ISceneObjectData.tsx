@@ -1,5 +1,5 @@
 import { Component } from "solid-js";
-import { ClassProps, setupClassProps } from "src/utils/ClassProps";
+import { ClassProps, setupClassProps } from "@utils/ClassProps";
 import { TransfromData } from "../3dData/TransformData";
 import { ISceneObject } from "@lib/3d/Scene";
 

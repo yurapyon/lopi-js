@@ -1,5 +1,5 @@
 import { ISceneObject, SceneCamera } from "../3d/Scene";
-import { createUniqueId } from "src/utils/createUniqueId";
+import { createUniqueId } from "@utils/createUniqueId";
 
 export interface IEditor {
   id: string;
