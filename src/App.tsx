@@ -15,8 +15,8 @@ import { Workspaces } from "./components/workspaces/Workspaces";
 import { useLopiStoreContext } from "./components/providers/LopiStoreProvider";
 import { useInteractionStateContext } from "./components/providers/InteractionProvider";
 import { DataLists } from "./components/DataLists/DataLists";
-import { Scene, SceneCamera, SceneObject } from "./lib/3d/Scene";
-import { Editor3d } from "./lib/editors/Editor";
+import { Scene, SceneObject } from "@lib/3d/Scene";
+import { Editor3d } from "@lib/editors/Editor";
 
 const App: Component = () => {
   const [enteringCommand, setEnteringCommand] = createSignal(false);

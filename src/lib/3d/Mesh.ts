@@ -1,4 +1,4 @@
-import { GL } from "../gfx/GL";
+import { GL } from "@utils/gfx/GL";
 import { Geometry } from "./Geometry";
 
 const vertex3dVertexAttributes = [

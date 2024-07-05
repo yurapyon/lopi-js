@@ -1,7 +1,7 @@
 import { Component } from "solid-js";
-import { Scene } from "../../lib/3d/Scene";
 import { useLopiStoreContext } from "../providers/LopiStoreProvider";
-import { Editor3d } from "../../lib/editors/Editor";
+import { Editor3d } from "@lib/editors/Editor";
+import { Scene } from "@lib/3d/Scene";
 
 export const Editor3dComponent: Component<{ editor: Editor3d }> = (props) => {
   const { getScene } = useLopiStoreContext();

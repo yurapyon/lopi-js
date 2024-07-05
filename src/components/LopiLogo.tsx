@@ -1,5 +1,5 @@
+import { ClassProps, setupClassProps } from "src/utils/ClassProps";
 import { Component } from "solid-js";
-import { ClassProps, setupClassProps } from "../lib/utils/ClassProps";
 
 export const LopiLogo: Component<ClassProps> = (props_) => {
   const { classes } = setupClassProps(props_);

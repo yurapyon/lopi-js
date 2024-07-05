@@ -1,5 +1,5 @@
+import { EDITOR_TYPES, EditorType } from "@lib/editors/Editor";
 import { Button } from "../general-ui/Button";
-import { EDITOR_TYPES, EditorType } from "../../lib/editors/Editor";
 import { Component, Index, Show, createSelector, createSignal } from "solid-js";
 
 const switchEditorType = (editorId: string, newEditorType: EditorType) => {

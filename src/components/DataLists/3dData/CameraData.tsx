@@ -1,7 +1,7 @@
 import { Component, createSelector } from "solid-js";
-import { ClassProps, setupClassProps } from "../../../lib/utils/ClassProps";
+import { ClassProps, setupClassProps } from "src/utils/ClassProps";
 import { Button } from "../../general-ui/Button";
-import { Camera } from "../../../lib/3d/Camera";
+import { Camera } from "@lib/3d/Camera";
 
 export const CameraData: Component<
   {

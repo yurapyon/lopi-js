@@ -1,7 +1,7 @@
 import { Component } from "solid-js";
-import { ISceneObject } from "../../../lib/3d/Scene";
-import { ClassProps, setupClassProps } from "../../../lib/utils/ClassProps";
+import { ClassProps, setupClassProps } from "src/utils/ClassProps";
 import { TransfromData } from "../3dData/TransformData";
+import { ISceneObject } from "@lib/3d/Scene";
 
 export const ISceneObjectData: Component<
   { iSceneObject: ISceneObject } & ClassProps

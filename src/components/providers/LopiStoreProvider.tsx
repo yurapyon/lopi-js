@@ -1,5 +1,5 @@
+import { LopiStore, createLopiStore } from "@lib/LopiStore";
 import { ParentComponent, createContext, useContext } from "solid-js";
-import { LopiStore, createLopiStore } from "../../lib/LopiStore";
 
 const LopiStoreContext = createContext<LopiStore>();
 

@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 import solidPlugin from "vite-plugin-solid";
 // import devtools from 'solid-devtools/vite';
+import path from "path";
 
 export default defineConfig({
   plugins: [
@@ -13,6 +14,13 @@ export default defineConfig({
   ],
   server: {
     port: 3000,
+  },
+  resolve: {
+    alias: {
+      "@globals": path.resolve(__dirname, "./src/globals/"),
+      "@lib": path.resolve(__dirname, "./src/lib/"),
+      "@utils": path.resolve(__dirname, "./src/utils/"),
+    },
   },
   build: {
     target: "esnext",

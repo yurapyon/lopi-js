@@ -1,7 +1,7 @@
 import { Component, JSX } from "solid-js";
-import { Transform } from "../../../lib/3d/Transform";
-import { ClassProps, setupClassProps } from "../../../lib/utils/ClassProps";
+import { ClassProps, setupClassProps } from "src/utils/ClassProps";
 import { Vec3Data } from "../MathData/Vec3Data";
+import { Transform } from "@lib/3d/Transform";
 
 export const TransfromData: Component<
   {

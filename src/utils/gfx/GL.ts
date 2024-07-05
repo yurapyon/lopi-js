@@ -1,6 +1,6 @@
 export namespace GL {
-  const GL_FLOAT = 5126;
-  const SIZE_OF_FLOAT = 4;
+  export const GL_FLOAT = 5126;
+  export const SIZE_OF_FLOAT = 4;
 
   export const makeTexture = (
     gl: WebGL2RenderingContext,

@@ -1,4 +1,4 @@
-export namespace CanvasExt {
+export namespace CanvasExtensions {
   export const clear = (canvas: HTMLCanvasElement) => {
     const gl = canvas.getContext("webgl2");
     if (!gl) return;

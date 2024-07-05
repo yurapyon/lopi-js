@@ -11,6 +11,7 @@
   "type": "module",
   "license": "MIT",
   "devDependencies": {
+    "@types/node": "^20.14.9",
     "autoprefixer": "^10.4.19",
     "postcss": "^8.4.38",
     "solid-devtools": "^0.29.2",

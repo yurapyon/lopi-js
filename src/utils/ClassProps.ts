@@ -1,16 +1,14 @@
 import { mergeProps } from "solid-js";
 
+type ClassList = { [k: string]: boolean | undefined };
+
 export interface ClassProps {
   class?: string;
-  classList?: { [k: string]: boolean | undefined };
+  classList?: ClassList;
 }
 
-type ClassList = NonNullable<ClassProps["classList"]>;
-
-const defaultClassProps = { class: "", classList: {} };
-
 export function setupClassProps<T extends unknown[]>(...sources: T) {
-  const props_ = mergeProps(defaultClassProps, ...sources);
+  const props_ = mergeProps({ class: "", classList: {} }, ...sources);
   return {
     props: props_,
     classes: { [props_.class]: true, ...props_.classList },

@@ -1,6 +1,6 @@
 import { Component } from "solid-js";
-import { Editor, EditorType } from "../../lib/editors/Editor";
 import { Editor3dComponent } from "./Editor3dComponent";
+import { Editor, EditorType } from "@lib/editors/Editor";
 
 const DummyEditorComponent: Component<{ editor: Editor }> = () => {
   return null;

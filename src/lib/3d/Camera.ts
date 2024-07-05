@@ -1,5 +1,5 @@
 import { mat4 } from "gl-matrix";
-import { degreesToRadians } from "../utils/math";
+import { degreesToRadians } from "src/utils/math";
 
 export type CameraType = "perspective" | "orthographic";
 
