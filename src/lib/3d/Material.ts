@@ -1,4 +1,4 @@
-import { GL } from "@utils/gfx/GL";
+import { GL } from "@lib/gfx/GL";
 
 export interface Material {
   program: WebGLProgram;

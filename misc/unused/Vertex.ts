@@ -1,5 +1,5 @@
 import { vec2, vec3 } from "gl-matrix";
-import { GL } from "@utils/gfx/GL";
+import { GL } from "@lib/gfx/GL";
 
 interface VertexAttribute {
   type: number;

@@ -2,7 +2,8 @@ import { Component, Index, Match, Show, Switch } from "solid-js";
 import { CameraData } from "./3dData/CameraData";
 import { useLopiStoreContext } from "../providers/LopiStoreProvider";
 import { ISceneObjectData } from "./SceneObjectData/ISceneObjectData";
-import { Scene, SceneCamera } from "@lib/3d/Scene";
+import { SceneCamera } from "@lib/scene/SceneCamera";
+import { Scene } from "@lib/scene/Scene";
 
 export const SceneHeirarchy: Component<{ scene: Scene }> = (props) => {
   const { produceScene } = useLopiStoreContext();

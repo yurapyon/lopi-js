@@ -3,7 +3,7 @@ import { Editor, Editor3d, EditorAnimation, EditorUV } from "./editors/Editor";
 import { createStore, produce } from "solid-js/store";
 import { Workspace } from "./views/View";
 import { Settings } from "./Settings";
-import { Scene } from "./3d/Scene";
+import { Scene } from "./scene/Scene";
 
 export interface LopiStoreAPI {
   workspaces: Workspace[];
