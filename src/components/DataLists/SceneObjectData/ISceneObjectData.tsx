@@ -4,7 +4,10 @@ import { TransfromData } from "../3dData/TransformData";
 import { ISceneObject } from "@lib/scene/SceneObject";
 
 export const ISceneObjectData: Component<
-  { iSceneObject: ISceneObject } & ClassProps
+  {
+    iSceneObject: ISceneObject;
+    onChangeMut: (mutate: (iSceneObject: ISceneObject) => void) => void;
+  } & ClassProps
 > = (props_) => {
   const { props, classes } = setupClassProps(props_);
 
@@ -16,7 +19,11 @@ export const ISceneObjectData: Component<
       </div>
       <TransfromData
         transform={props.iSceneObject.transform}
-        onChange={() => {}}
+        onChangeMut={(mutate) => {
+          props.onChangeMut((iSceneObject) => {
+            mutate(iSceneObject.transform);
+          });
+        }}
       />
     </div>
   );

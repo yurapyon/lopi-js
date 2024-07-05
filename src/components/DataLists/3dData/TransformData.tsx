@@ -6,7 +6,7 @@ import { Transform } from "@lib/3d/Transform";
 export const TransfromData: Component<
   {
     transform: Transform;
-    onChange: (updateObject: Partial<Transform>) => void;
+    onChangeMut: (mutate: (transform: Transform) => void) => void;
   } & ClassProps
 > = (props_) => {
   const { props, classes } = setupClassProps(props_);
@@ -14,11 +14,25 @@ export const TransfromData: Component<
     <div class="flex flex-col" classList={classes}>
       <div class="flex flex-row gap-[1ch]">
         p
-        <Vec3Data value={props.transform.position} onChange={() => {}} />
+        <Vec3Data
+          value={props.transform.position}
+          onChange={(newVec) => {
+            props.onChangeMut((transform) => {
+              transform.position = newVec;
+            });
+          }}
+        />
       </div>
       <div class="flex flex-row gap-[1ch]">
         s
-        <Vec3Data value={props.transform.scale} onChange={() => {}} />
+        <Vec3Data
+          value={props.transform.scale}
+          onChange={(newVec) => {
+            props.onChangeMut((transform) => {
+              transform.scale = newVec;
+            });
+          }}
+        />
       </div>
     </div>
   );

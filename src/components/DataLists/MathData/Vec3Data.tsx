@@ -5,13 +5,21 @@ import { ClassProps, setupClassProps } from "@utils/ClassProps";
 export const Vec3Data: Component<
   {
     value: vec3;
-    onChange: () => void;
+    onChange: (v: vec3) => void;
   } & ClassProps
 > = (props_) => {
   const { props, classes } = setupClassProps(props_);
   return (
     <div class="flex flex-row gap-[1ch]" classList={classes}>
-      <div>{props.value[0]}</div>
+      <div
+        onClick={() => {
+          const newVec = [...props.value] as vec3;
+          newVec[0] += 1;
+          props.onChange(newVec);
+        }}
+      >
+        {props.value[0]}
+      </div>
       <div>{props.value[1]}</div>
       <div>{props.value[2]}</div>
     </div>

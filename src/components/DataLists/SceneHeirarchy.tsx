@@ -4,6 +4,7 @@ import { useLopiStoreContext } from "../providers/LopiStoreProvider";
 import { ISceneObjectData } from "./SceneObjectData/ISceneObjectData";
 import { SceneCamera } from "@lib/scene/SceneCamera";
 import { Scene } from "@lib/scene/Scene";
+import { ISceneObject } from "@lib/scene/SceneObject";
 
 export const SceneHeirarchy: Component<{ scene: Scene }> = (props) => {
   const { produceScene } = useLopiStoreContext();
@@ -12,7 +13,20 @@ export const SceneHeirarchy: Component<{ scene: Scene }> = (props) => {
       {(sceneObject) => {
         return (
           <div class="flex flex-col">
-            <ISceneObjectData iSceneObject={sceneObject()} />
+            <ISceneObjectData
+              iSceneObject={sceneObject()}
+              onChangeMut={(mutate) => {
+                produceScene(props.scene.id, (scene) => {
+                  const mutableSceneObject = scene.sceneObjects.find(
+                    (mutableSceneObject) =>
+                      mutableSceneObject.id === sceneObject().id
+                  );
+
+                  const iSceneObject = mutableSceneObject as ISceneObject;
+                  mutate(iSceneObject);
+                });
+              }}
+            />
             <Switch fallback={sceneObject().name}>
               <Match when={sceneObject().type === "camera"}>
                 <CameraData
