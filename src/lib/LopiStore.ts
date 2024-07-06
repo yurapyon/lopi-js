@@ -1,6 +1,6 @@
 import { createUniqueId } from "@utils/createUniqueId";
 import { createStore, produce } from "solid-js/store";
-import { Workspace } from "./views/View";
+import { Workspace } from "./views/Workspace";
 import { Settings } from "./Settings";
 import { Scene } from "./scene/Scene";
 import { Editor3d } from "./editors/Editor3d";

@@ -12,6 +12,8 @@ interface InteractionState {
   setSelectedToolId: Setter<string | null>;
   selectedEditorId: Accessor<string | null>;
   setSelectedEditorId: Setter<string | null>;
+  selectedSceneId: Accessor<string | null>;
+  setSelectedSceneId: Setter<string | null>;
   selectedSceneObjectIds: Accessor<string[]>;
   setSelectedSceneObjectIds: Setter<string[]>;
 }
@@ -31,6 +33,9 @@ export const InteractionStateProvider: ParentComponent = (props) => {
   const [selectedEditorId, setSelectedEditorId] = createSignal<string | null>(
     null
   );
+  const [selectedSceneId, setSelectedSceneId] = createSignal<string | null>(
+    null
+  );
   const [selectedSceneObjectIds, setSelectedSceneObjectIds] = createSignal<
     string[]
   >([]);
@@ -40,6 +45,8 @@ export const InteractionStateProvider: ParentComponent = (props) => {
     setSelectedToolId,
     selectedEditorId,
     setSelectedEditorId,
+    selectedSceneId,
+    setSelectedSceneId,
     selectedSceneObjectIds,
     setSelectedSceneObjectIds,
   };

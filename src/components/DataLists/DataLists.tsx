@@ -50,30 +50,10 @@ const ListGroup: Component<{
 export const DataLists: Component<ClassProps> = (props_) => {
   const { classes } = setupClassProps(props_);
 
-  const { getScenes, getEditor, produceEditor } = useLopiStoreContext();
-  const { selectedEditorId } = useInteractionStateContext();
+  const { getScenes } = useLopiStoreContext();
+  const { selectedSceneId, setSelectedSceneId } = useInteractionStateContext();
 
-  const selectedEditor = () => {
-    const e_id = selectedEditorId();
-    if (e_id) {
-      const editor = getEditor(e_id);
-      if (!editor) {
-        // TODO error
-        throw "error";
-      }
-      return editor;
-    }
-  };
-
-  const isSelectedScene = createSelector(() => {
-    const editor = selectedEditor();
-    if (editor) {
-      if (editor.type === "3d") {
-        return editor.currentSceneId || undefined;
-      }
-    }
-    return undefined;
-  });
+  const isSelectedScene = createSelector(selectedSceneId);
 
   return (
     <div class="flex flex-col w-full" classList={classes}>
@@ -85,20 +65,7 @@ export const DataLists: Component<ClassProps> = (props_) => {
               title={scene().name}
               selected={isSelectedScene(scene().id)}
               onClick={() => {
-                const e_id = selectedEditorId();
-                if (e_id) {
-                  const editor = getEditor(e_id);
-                  if (!editor) {
-                    // TODO error
-                    throw "error";
-                  }
-
-                  produceEditor(e_id, (editor) => {
-                    if (editor.type === "3d") {
-                      editor.currentSceneId = scene().id;
-                    }
-                  });
-                }
+                setSelectedSceneId(scene().id);
               }}
             >
               <SceneHeirarchy scene={scene()} />

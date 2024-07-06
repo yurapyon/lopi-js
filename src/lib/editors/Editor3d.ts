@@ -3,7 +3,8 @@ import { IEditor } from "./Editor";
 import { ISceneObject } from "@lib/scene/SceneObject";
 import { Scene } from "@lib/scene/Scene";
 import { Mutator } from "@utils/Mutator";
-import { vec3 } from "gl-matrix";
+import { MouseState } from "@lib/events/MouseState";
+import { Events } from "@lib/process/Events";
 
 export type RenderStyle = "wireframe" | "flat" | "shader";
 
@@ -11,8 +12,10 @@ export interface Editor3d extends IEditor {
   type: "3d";
   camera: SceneCamera;
   renderStyle: RenderStyle;
-  currentSceneId: string | null;
-  dummyInfo: { x: number; y: number };
+  external: number;
+  untracked: {
+    internal: number;
+  };
 }
 
 export namespace Editor3d {
@@ -31,22 +34,39 @@ export namespace Editor3d {
         },
       },
       renderStyle: "flat",
-      currentSceneId: null,
-      dummyInfo: { x: 0, y: 0 },
+      external: 0,
+      untracked: {
+        internal: 0,
+      },
     };
   };
 
-  export const processMouseEvent = (
+  export const processMouseState = (
     editor3d: Editor3d,
     mutateEditor: Mutator<Editor3d>,
-    e: MouseEvent,
+    mouseState: MouseState,
+    mutateMouseState: Mutator<MouseState>,
     scene: Scene,
     mutateScene: Mutator<Scene>
   ) => {
-    //
+    const lastEvent = mouseState.lastEvent;
+    if (lastEvent.type === "mousedown") {
+      const eCanvas = lastEvent.target as HTMLCanvasElement;
+      mutateMouseState((state) => {
+        Events.startPointerLock(state, eCanvas, () => {
+          console.log("cancelled grab");
+        });
+      });
+    }
+
+    /*
+    const untracked = unwrap(editor3d.untracked);
+    untracked.internal = mouseState.lastEvent.screenX;
+
     mutateEditor((editor3d) => {
-      editor3d.dummyInfo.x = e.screenX;
-      editor3d.dummyInfo.y = e.screenY;
+      if (untracked.internal % 5 === 0) {
+        editor3d.external = untracked.internal;
+      }
     });
 
     if (scene.name === "internal") {
@@ -54,9 +74,20 @@ export namespace Editor3d {
         const camera = scene.sceneObjects[0] as SceneCamera;
         const previousPosition = camera.transform.position;
         const newPosition = [...previousPosition];
-        newPosition[0] = e.screenX;
+        newPosition[0] = mouseState.lastEvent.screenX;
         camera.transform.position = newPosition as vec3;
       });
     }
+     */
+  };
+
+  export const processKeyboardEvent = (
+    editor3d: Editor3d,
+    mutateEditor: Mutator<Editor3d>,
+    e: KeyboardEvent,
+    scene: Scene,
+    mutateScene: Mutator<Scene>
+  ) => {
+    //
   };
 }
