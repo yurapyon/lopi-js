@@ -1,12 +1,13 @@
 import { Component } from "solid-js";
 import { ClassProps, setupClassProps } from "@utils/ClassProps";
-import { TransfromData } from "../3dData/TransformData";
+import { TransformData } from "../3dData/TransformData";
 import { ISceneObject } from "@lib/scene/SceneObject";
+import { Mutator } from "@utils/Mutator";
 
 export const ISceneObjectData: Component<
   {
     iSceneObject: ISceneObject;
-    onChangeMut: (mutate: (iSceneObject: ISceneObject) => void) => void;
+    mutateISceneObject: Mutator<ISceneObject>;
   } & ClassProps
 > = (props_) => {
   const { props, classes } = setupClassProps(props_);
@@ -17,11 +18,11 @@ export const ISceneObjectData: Component<
         <div>{props.iSceneObject.isActive ? "O" : "X"}</div>
         <div>{props.iSceneObject.name}</div>
       </div>
-      <TransfromData
+      <TransformData
         transform={props.iSceneObject.transform}
-        onChangeMut={(mutate) => {
-          props.onChangeMut((iSceneObject) => {
-            mutate(iSceneObject.transform);
+        mutateTransform={(mutateTransform) => {
+          props.mutateISceneObject((iSceneObject) => {
+            mutateTransform(iSceneObject.transform);
           });
         }}
       />

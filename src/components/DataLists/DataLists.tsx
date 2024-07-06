@@ -1,19 +1,38 @@
-import { Component, Index, JSX, Show, createSignal } from "solid-js";
+import {
+  Component,
+  Index,
+  JSX,
+  Show,
+  createSelector,
+  createSignal,
+} from "solid-js";
 import { Button } from "../general-ui/Button";
 import { SceneHeirarchy } from "./SceneHeirarchy";
 import { useLopiStoreContext } from "../providers/LopiStoreProvider";
 import { ClassProps, setupClassProps } from "@utils/ClassProps";
+import { useInteractionStateContext } from "../providers/InteractionProvider";
 
-const ListGroup: Component<{ title: string; children?: JSX.Element }> = (
-  props
-) => {
+const ListGroup: Component<{
+  title: string;
+  selected?: boolean;
+  onClick?: (e: MouseEvent) => void;
+  children?: JSX.Element;
+}> = (props) => {
   const [collapsed, setCollapsed] = createSignal(false);
   return (
     <div class="flex flex-col w-full">
-      <div class="flex flex-row w-full relative">
+      <div
+        class="flex flex-row w-full relative"
+        classList={{
+          "hover:bg-lopi-grey-extra-light cursor-pointer": !!props.onClick,
+          "bg-lopi-grey-extra-light": props.selected,
+        }}
+        onClick={props.onClick}
+      >
         <Button
           variant="light"
-          onClick={() => {
+          onClick={(e) => {
+            e.stopPropagation();
             setCollapsed((collapsed) => !collapsed);
           }}
           class="px-[1ch]"
@@ -31,14 +50,57 @@ const ListGroup: Component<{ title: string; children?: JSX.Element }> = (
 export const DataLists: Component<ClassProps> = (props_) => {
   const { classes } = setupClassProps(props_);
 
-  const { getScenes } = useLopiStoreContext();
+  const { getScenes, getEditor, produceEditor } = useLopiStoreContext();
+  const { selectedEditorId } = useInteractionStateContext();
+
+  const selectedEditor = () => {
+    const e_id = selectedEditorId();
+    if (e_id) {
+      const editor = getEditor(e_id);
+      if (!editor) {
+        // TODO error
+        throw "error";
+      }
+      return editor;
+    }
+  };
+
+  const isSelectedScene = createSelector(() => {
+    const editor = selectedEditor();
+    if (editor) {
+      if (editor.type === "3d") {
+        return editor.currentSceneId || undefined;
+      }
+    }
+    return undefined;
+  });
+
   return (
     <div class="flex flex-col w-full" classList={classes}>
       <ListGroup title="data">expanded</ListGroup>
       <Index each={getScenes()}>
         {(scene) => {
           return (
-            <ListGroup title={scene().name}>
+            <ListGroup
+              title={scene().name}
+              selected={isSelectedScene(scene().id)}
+              onClick={() => {
+                const e_id = selectedEditorId();
+                if (e_id) {
+                  const editor = getEditor(e_id);
+                  if (!editor) {
+                    // TODO error
+                    throw "error";
+                  }
+
+                  produceEditor(e_id, (editor) => {
+                    if (editor.type === "3d") {
+                      editor.currentSceneId = scene().id;
+                    }
+                  });
+                }
+              }}
+            >
               <SceneHeirarchy scene={scene()} />
             </ListGroup>
           );

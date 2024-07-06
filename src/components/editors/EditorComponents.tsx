@@ -1,15 +1,21 @@
 import { Component } from "solid-js";
 import { Editor3dComponent } from "./Editor3dComponent";
 import { Editor, EditorType } from "@lib/editors/Editor";
+import { Mutator } from "@utils/Mutator";
 
-const DummyEditorComponent: Component<{ editor: Editor }> = () => {
+type EditorComponent = Component<{
+  editor: Editor;
+  mutateEditor: Mutator<Editor>;
+}>;
+
+const DummyEditorComponent: EditorComponent = () => {
   return null;
 };
 
 export const getComponentForEditorType = (type: EditorType) => {
   switch (type) {
     case "3d":
-      return Editor3dComponent as Component<{ editor: Editor }>;
+      return Editor3dComponent as EditorComponent;
     case "uv":
       return DummyEditorComponent;
     case "animation":

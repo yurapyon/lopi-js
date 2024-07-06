@@ -1,6 +1,7 @@
-import { SceneCamera } from "@lib/scene/SceneCamera";
-import { ISceneObject } from "@lib/scene/SceneObject";
 import { createUniqueId } from "@utils/createUniqueId";
+import { Editor3d } from "./Editor3d";
+import { EditorUV } from "./EditorUV";
+import { EditorAnimation } from "./EditorAnimation";
 
 export interface IEditor {
   id: string;
@@ -13,42 +14,6 @@ export namespace IEditor {
       id,
     };
   };
-}
-
-export type RenderStyle = "wireframe" | "flat" | "shader";
-
-export interface Editor3d extends IEditor {
-  type: "3d";
-  camera: SceneCamera;
-  renderStyle: RenderStyle;
-}
-
-export namespace Editor3d {
-  export const create = (): Editor3d => {
-    const iEditor = IEditor.create();
-    return {
-      ...iEditor,
-      type: "3d",
-      camera: {
-        ...ISceneObject.create(),
-        type: "camera",
-        name: iEditor.id + ":camera",
-        camera: {
-          type: "perspective",
-          fovDegrees: 90,
-        },
-      },
-      renderStyle: "flat",
-    };
-  };
-}
-
-export interface EditorUV extends IEditor {
-  type: "uv";
-}
-
-export interface EditorAnimation extends IEditor {
-  type: "animation";
 }
 
 export type Editor = Editor3d | EditorUV | EditorAnimation;

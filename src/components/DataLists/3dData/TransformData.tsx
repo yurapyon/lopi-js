@@ -2,11 +2,12 @@ import { Component, JSX } from "solid-js";
 import { ClassProps, setupClassProps } from "@utils/ClassProps";
 import { Vec3Data } from "../MathData/Vec3Data";
 import { Transform } from "@lib/3d/Transform";
+import { Mutator } from "@utils/Mutator";
 
-export const TransfromData: Component<
+export const TransformData: Component<
   {
     transform: Transform;
-    onChangeMut: (mutate: (transform: Transform) => void) => void;
+    mutateTransform: Mutator<Transform>;
   } & ClassProps
 > = (props_) => {
   const { props, classes } = setupClassProps(props_);
@@ -17,7 +18,7 @@ export const TransfromData: Component<
         <Vec3Data
           value={props.transform.position}
           onChange={(newVec) => {
-            props.onChangeMut((transform) => {
+            props.mutateTransform((transform) => {
               transform.position = newVec;
             });
           }}
@@ -28,7 +29,7 @@ export const TransfromData: Component<
         <Vec3Data
           value={props.transform.scale}
           onChange={(newVec) => {
-            props.onChangeMut((transform) => {
+            props.mutateTransform((transform) => {
               transform.scale = newVec;
             });
           }}

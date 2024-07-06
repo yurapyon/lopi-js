@@ -15,15 +15,16 @@ import { Workspaces } from "./components/workspaces/Workspaces";
 import { useLopiStoreContext } from "./components/providers/LopiStoreProvider";
 import { useInteractionStateContext } from "./components/providers/InteractionProvider";
 import { DataLists } from "./components/DataLists/DataLists";
-import { Editor3d } from "@lib/editors/Editor";
 import { Scene } from "@lib/scene/Scene";
 import { SceneObject } from "@lib/scene/SceneObject";
+import { Editor3d } from "@lib/editors/Editor3d";
 
 const App: Component = () => {
   const [enteringCommand, setEnteringCommand] = createSignal(false);
 
   const store = useLopiStoreContext();
-  const { selectedEditorId } = useInteractionStateContext();
+  const { selectedEditorId, setSelectedEditorId } =
+    useInteractionStateContext();
 
   onMount(() => {
     const internalScene = Scene.create();
@@ -33,11 +34,10 @@ const App: Component = () => {
     const e3d = Editor3d.create();
     SceneObject.setParent(internalScene.root, e3d.camera);
     internalScene.sceneObjects.push(e3d.camera);
+    const e_id = store.addEditor(e3d);
+    setSelectedEditorId(e_id);
 
     const w_id = store.addWorkspace();
-    const e_id = store.addEditor({
-      ...Editor3d.create(),
-    });
     store.setWorkspace(w_id, { name: "asdf", editorIds: [e_id] });
 
     store.addScene(Scene.create());
