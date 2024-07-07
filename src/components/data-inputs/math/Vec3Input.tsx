@@ -2,7 +2,7 @@ import { vec3 } from "gl-matrix";
 import { Component } from "solid-js";
 import { ClassProps, setupClassProps } from "@utils/ClassProps";
 
-export const Vec3Data: Component<
+export const Vec3Input: Component<
   {
     value: vec3;
     onChange: (v: vec3) => void;

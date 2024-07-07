@@ -1,4 +1,4 @@
-import { MouseState } from "@lib/events/MouseState";
+import { MouseState } from "./events/MouseState";
 
 export namespace Events {
   export const processMouseEvent = (mouseState: MouseState, e: MouseEvent) => {

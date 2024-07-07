@@ -1,9 +1,9 @@
 import { Component, createSelector } from "solid-js";
 import { Button } from "../../general-ui/Button";
-import { Camera } from "@lib/3d/Camera";
+import { Camera } from "@lib/data/3d/Camera";
 import { ClassProps, setupClassProps } from "@utils/ClassProps";
 
-export const CameraData: Component<
+export const CameraInput: Component<
   {
     camera: Camera;
     onChange: (updateObject: Partial<Camera>) => void;

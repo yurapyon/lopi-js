@@ -1,5 +1,5 @@
-import { Camera } from "@lib/3d/Camera";
-import { Material } from "@lib/3d/Material";
+import { Camera } from "@lib/data/3d/Camera";
+import { Material } from "@lib/gfx/Material";
 import { Scene } from "@lib/nodes/scene/Scene";
 import { SceneCamera } from "@lib/nodes/scene/SceneCamera";
 import { SceneMesh } from "@lib/nodes/scene/SceneMesh";
@@ -92,8 +92,6 @@ export namespace Rendering {
         case "root":
           break;
         case "empty":
-          break;
-        case "material-group":
           break;
         case "mesh":
           SceneMesh.render(gl, currentObject);

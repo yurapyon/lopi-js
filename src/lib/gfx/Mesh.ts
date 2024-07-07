@@ -1,5 +1,5 @@
-import { GL } from "@lib/gfx/GL";
-import { Geometry } from "./Geometry";
+import { Geometry } from "@lib/data/3d/Geometry";
+import { GL } from "./GL";
 
 const vertex3dVertexAttributes = [
   // position

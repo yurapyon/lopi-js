@@ -1,4 +1,4 @@
-import { Transform } from "@lib/3d/Transform";
+import { Transform } from "@lib/data/3d/Transform";
 import { LopiNode } from "@lib/nodes/LopiNode";
 import { mat4 } from "gl-matrix";
 

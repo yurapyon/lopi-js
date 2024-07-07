@@ -1,12 +1,12 @@
-import { Component, Setter, Show } from "solid-js";
+import { Component, Show } from "solid-js";
 import { useLopiStoreContext } from "../providers/LopiStoreProvider";
 import { Scene } from "@lib/nodes/scene/Scene";
 import { Editor3d } from "@lib/editors/Editor3d";
 import { Mutator } from "@utils/Mutator";
-import { MouseState } from "@lib/events/MouseState";
 import { Rendering } from "@lib/process/Rendering";
 import { Events } from "@lib/process/Events";
 import { useInteractionStateContext } from "../providers/InteractionProvider";
+import { MouseState } from "@lib/process/events/MouseState";
 
 const Editor3dCanvas: Component<{
   editor3d: Editor3d;

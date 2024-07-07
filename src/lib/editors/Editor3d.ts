@@ -2,9 +2,9 @@ import { SceneCamera } from "@lib/nodes/scene/SceneCamera";
 import { IEditor } from "./Editor";
 import { Scene } from "@lib/nodes/scene/Scene";
 import { Mutator } from "@utils/Mutator";
-import { MouseState } from "@lib/events/MouseState";
 import { Events } from "@lib/process/Events";
 import { Spatial } from "@lib/nodes/scene/Spatial";
+import { MouseState } from "@lib/process/events/MouseState";
 
 export type RenderStyle = "wireframe" | "flat" | "shader";
 

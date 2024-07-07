@@ -1,7 +1,7 @@
 import { Component, Index, Match, Show, Switch } from "solid-js";
-import { CameraData } from "./3dData/CameraData";
+import { CameraInput } from "./3d/CameraInput";
 import { useLopiStoreContext } from "../providers/LopiStoreProvider";
-import { SpatialData } from "./SceneObjectData/SpatialData";
+import { SpatialInput } from "./nodes/scene/SpatialInput";
 import { SceneCamera } from "@lib/nodes/scene/SceneCamera";
 import { Scene } from "@lib/nodes/scene/Scene";
 import { SceneObject } from "@lib/nodes/scene/SceneObject";
@@ -26,7 +26,7 @@ export const SceneHeirarchy: Component<{ scene: Scene }> = (props) => {
 
         return (
           <div class="flex flex-col">
-            <SpatialData
+            <SpatialInput
               spatial={sceneObject()}
               mutateSpatial={(mutateSpatial) => {
                 produceSceneObject((mutableSceneObject) => {
@@ -37,7 +37,7 @@ export const SceneHeirarchy: Component<{ scene: Scene }> = (props) => {
             />
             <Switch fallback={sceneObject().name}>
               <Match when={sceneObject().type === "camera"}>
-                <CameraData
+                <CameraInput
                   camera={(sceneObject() as SceneCamera).camera}
                   onChange={(updateObject) => {
                     produceSceneObject((mutableSceneObject) => {

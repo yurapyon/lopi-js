@@ -14,7 +14,7 @@ import { ToolList } from "./components/ToolBar/ToolList";
 import { Workspaces } from "./components/workspaces/Workspaces";
 import { useLopiStoreContext } from "./components/providers/LopiStoreProvider";
 import { useInteractionStateContext } from "./components/providers/InteractionProvider";
-import { DataLists } from "./components/DataLists/DataLists";
+import { DataLists } from "./components/data-inputs/DataLists";
 import { Scene } from "@lib/nodes/scene/Scene";
 import { Editor3d } from "@lib/editors/Editor3d";
 import { Spatial } from "@lib/nodes/scene/Spatial";

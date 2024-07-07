@@ -1,4 +1,4 @@
-import { Camera } from "@lib/3d/Camera";
+import { Camera } from "@lib/data/3d/Camera";
 import { Spatial } from "./Spatial";
 
 export interface SceneCamera extends Spatial {

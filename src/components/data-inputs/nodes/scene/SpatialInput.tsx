@@ -1,10 +1,10 @@
 import { Component } from "solid-js";
 import { ClassProps, setupClassProps } from "@utils/ClassProps";
-import { TransformData } from "../3dData/TransformData";
+import { TransformInput } from "../../3d/TransformInput";
 import { Mutator } from "@utils/Mutator";
 import { Spatial } from "@lib/nodes/scene/Spatial";
 
-export const SpatialData: Component<
+export const SpatialInput: Component<
   {
     spatial: Spatial;
     mutateSpatial: Mutator<Spatial>;
@@ -18,7 +18,7 @@ export const SpatialData: Component<
         <div>{props.spatial.isActive ? "O" : "X"}</div>
         <div>{props.spatial.name}</div>
       </div>
-      <TransformData
+      <TransformInput
         transform={props.spatial.transform}
         mutateTransform={(mutateTransform) => {
           props.mutateSpatial((spatial) => {

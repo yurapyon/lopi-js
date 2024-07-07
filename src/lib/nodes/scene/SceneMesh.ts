@@ -1,7 +1,7 @@
-import { Geometry } from "@lib/3d/Geometry";
-import { Mesh } from "@lib/3d/Mesh";
-import { SkinnedGeometry } from "@lib/3d/Armature";
+import { Geometry } from "@lib/data/3d/Geometry";
 import { Spatial } from "./Spatial";
+import { Mesh } from "@lib/gfx/Mesh";
+import { SkinnedGeometry } from "@lib/data/3d/Armature";
 
 // export type MeshRenderMode = "wireframe" | "solid";
 
