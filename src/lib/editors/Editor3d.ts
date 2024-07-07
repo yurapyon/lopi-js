@@ -1,10 +1,10 @@
-import { SceneCamera } from "@lib/scene/SceneCamera";
+import { SceneCamera } from "@lib/nodes/scene/SceneCamera";
 import { IEditor } from "./Editor";
-import { ISceneObject } from "@lib/scene/SceneObject";
-import { Scene } from "@lib/scene/Scene";
+import { Scene } from "@lib/nodes/scene/Scene";
 import { Mutator } from "@utils/Mutator";
 import { MouseState } from "@lib/events/MouseState";
 import { Events } from "@lib/process/Events";
+import { Spatial } from "@lib/nodes/scene/Spatial";
 
 export type RenderStyle = "wireframe" | "flat" | "shader";
 
@@ -25,7 +25,7 @@ export namespace Editor3d {
       ...iEditor,
       type: "3d",
       camera: {
-        ...ISceneObject.create(),
+        ...Spatial.create(),
         type: "camera",
         name: iEditor.id + ":camera",
         camera: {

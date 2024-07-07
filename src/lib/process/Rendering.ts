@@ -1,8 +1,29 @@
 import { Camera } from "@lib/3d/Camera";
-import { Scene } from "@lib/scene/Scene";
-import { SceneCamera } from "@lib/scene/SceneCamera";
-import { SceneMesh } from "@lib/scene/SceneMesh";
+import { Material } from "@lib/3d/Material";
+import { Scene } from "@lib/nodes/scene/Scene";
+import { SceneCamera } from "@lib/nodes/scene/SceneCamera";
+import { SceneMesh } from "@lib/nodes/scene/SceneMesh";
 import { mat4 } from "gl-matrix";
+
+export interface RenderingContext {
+  projectionMatrix: mat4;
+  viewMatrix: mat4;
+}
+
+export namespace RenderingContext {
+  export const setProjection = (
+    context: RenderingContext,
+    camera: Camera,
+    width: number,
+    height: number
+  ) => {
+    Camera.toMatrix(context.projectionMatrix, camera, width, height);
+  };
+
+  export const setView = (context: RenderingContext, viewMatrix: mat4) => {
+    mat4.copy(context.viewMatrix, viewMatrix);
+  };
+}
 
 export namespace Rendering {
   const updateTransforms = (scene: Scene) => {
@@ -19,11 +40,43 @@ export namespace Rendering {
     */
   };
 
+  const useMaterial = (
+    gl: WebGL2RenderingContext,
+    material: Material,
+    renderingContext: RenderingContext
+  ) => {
+    gl.useProgram(material.program);
+    gl.uniformMatrix4fv(
+      material.locations.projection,
+      false,
+      renderingContext.projectionMatrix
+    );
+    gl.uniformMatrix4fv(
+      material.locations.view,
+      false,
+      renderingContext.viewMatrix
+    );
+  };
+
   export const render = (
     canvas: HTMLCanvasElement,
     scene: Scene,
     camera: SceneCamera
   ) => {
+    const context: RenderingContext = {
+      projectionMatrix: mat4.create(),
+      viewMatrix: mat4.create(),
+    };
+
+    RenderingContext.setProjection(
+      context,
+      camera.camera,
+      canvas.width,
+      canvas.height
+    );
+
+    RenderingContext.setView(context, camera.worldMatrix);
+
     const gl = canvas.getContext("webgl2");
     if (!gl) {
       // TODO error
@@ -32,14 +85,6 @@ export namespace Rendering {
 
     updateTransforms(scene);
 
-    const projectionMatrix = mat4.create();
-    Camera.toMatrix(
-      projectionMatrix,
-      camera.camera,
-      canvas.width,
-      canvas.height
-    );
-
     // TODO for a given material we have to update the camera related uniforms
 
     for (const currentObject of scene.sceneObjects) {
@@ -47,6 +92,8 @@ export namespace Rendering {
         case "root":
           break;
         case "empty":
+          break;
+        case "material-group":
           break;
         case "mesh":
           SceneMesh.render(gl, currentObject);

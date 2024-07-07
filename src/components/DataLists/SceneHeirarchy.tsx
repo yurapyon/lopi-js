@@ -1,10 +1,11 @@
 import { Component, Index, Match, Show, Switch } from "solid-js";
 import { CameraData } from "./3dData/CameraData";
 import { useLopiStoreContext } from "../providers/LopiStoreProvider";
-import { ISceneObjectData } from "./SceneObjectData/ISceneObjectData";
-import { SceneCamera } from "@lib/scene/SceneCamera";
-import { Scene } from "@lib/scene/Scene";
-import { ISceneObject, SceneObject } from "@lib/scene/SceneObject";
+import { SpatialData } from "./SceneObjectData/SpatialData";
+import { SceneCamera } from "@lib/nodes/scene/SceneCamera";
+import { Scene } from "@lib/nodes/scene/Scene";
+import { SceneObject } from "@lib/nodes/scene/SceneObject";
+import { Spatial } from "@lib/nodes/scene/Spatial";
 
 export const SceneHeirarchy: Component<{ scene: Scene }> = (props) => {
   const { produceScene } = useLopiStoreContext();
@@ -25,12 +26,12 @@ export const SceneHeirarchy: Component<{ scene: Scene }> = (props) => {
 
         return (
           <div class="flex flex-col">
-            <ISceneObjectData
-              iSceneObject={sceneObject()}
-              mutateISceneObject={(mutateISceneObject) => {
+            <SpatialData
+              spatial={sceneObject()}
+              mutateSpatial={(mutateSpatial) => {
                 produceSceneObject((mutableSceneObject) => {
-                  const iSceneObject = mutableSceneObject as ISceneObject;
-                  mutateISceneObject(iSceneObject);
+                  const spatial = mutableSceneObject as Spatial;
+                  mutateSpatial(spatial);
                 });
               }}
             />

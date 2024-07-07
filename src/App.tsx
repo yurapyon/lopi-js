@@ -15,9 +15,9 @@ import { Workspaces } from "./components/workspaces/Workspaces";
 import { useLopiStoreContext } from "./components/providers/LopiStoreProvider";
 import { useInteractionStateContext } from "./components/providers/InteractionProvider";
 import { DataLists } from "./components/DataLists/DataLists";
-import { Scene } from "@lib/scene/Scene";
-import { SceneObject } from "@lib/scene/SceneObject";
+import { Scene } from "@lib/nodes/scene/Scene";
 import { Editor3d } from "@lib/editors/Editor3d";
+import { Spatial } from "@lib/nodes/scene/Spatial";
 
 const App: Component = () => {
   const [enteringCommand, setEnteringCommand] = createSignal(false);
@@ -32,7 +32,7 @@ const App: Component = () => {
     store.addScene(internalScene);
 
     const e3d = Editor3d.create();
-    SceneObject.setParent(internalScene.root, e3d.camera);
+    Spatial.setParent(internalScene.root, e3d.camera);
     internalScene.sceneObjects.push(e3d.camera);
     const e_id = store.addEditor(e3d);
     setSelectedEditorId(e_id);

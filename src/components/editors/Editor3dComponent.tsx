@@ -1,6 +1,6 @@
 import { Component, Setter, Show } from "solid-js";
 import { useLopiStoreContext } from "../providers/LopiStoreProvider";
-import { Scene } from "@lib/scene/Scene";
+import { Scene } from "@lib/nodes/scene/Scene";
 import { Editor3d } from "@lib/editors/Editor3d";
 import { Mutator } from "@utils/Mutator";
 import { MouseState } from "@lib/events/MouseState";

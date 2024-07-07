@@ -1,6 +1,7 @@
 import { createUniqueId } from "@utils/createUniqueId";
 import { SceneRoot } from "./SceneRoot";
-import { ISceneObject, SceneObject } from "./SceneObject";
+import { SceneObject } from "./SceneObject";
+import { Spatial } from "./Spatial";
 
 export interface Scene {
   id: string;
@@ -12,7 +13,7 @@ export interface Scene {
 export namespace Scene {
   export const create = (): Scene => {
     const root: SceneRoot = {
-      ...ISceneObject.create(),
+      ...Spatial.create(),
       type: "root",
       name: "root",
     };

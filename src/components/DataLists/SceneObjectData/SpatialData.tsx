@@ -1,13 +1,13 @@
 import { Component } from "solid-js";
 import { ClassProps, setupClassProps } from "@utils/ClassProps";
 import { TransformData } from "../3dData/TransformData";
-import { ISceneObject } from "@lib/scene/SceneObject";
 import { Mutator } from "@utils/Mutator";
+import { Spatial } from "@lib/nodes/scene/Spatial";
 
-export const ISceneObjectData: Component<
+export const SpatialData: Component<
   {
-    iSceneObject: ISceneObject;
-    mutateISceneObject: Mutator<ISceneObject>;
+    spatial: Spatial;
+    mutateSpatial: Mutator<Spatial>;
   } & ClassProps
 > = (props_) => {
   const { props, classes } = setupClassProps(props_);
@@ -15,14 +15,14 @@ export const ISceneObjectData: Component<
   return (
     <div class="flex flex-col" classList={classes}>
       <div class="flex flex-row gap-[1ch]">
-        <div>{props.iSceneObject.isActive ? "O" : "X"}</div>
-        <div>{props.iSceneObject.name}</div>
+        <div>{props.spatial.isActive ? "O" : "X"}</div>
+        <div>{props.spatial.name}</div>
       </div>
       <TransformData
-        transform={props.iSceneObject.transform}
+        transform={props.spatial.transform}
         mutateTransform={(mutateTransform) => {
-          props.mutateISceneObject((iSceneObject) => {
-            mutateTransform(iSceneObject.transform);
+          props.mutateSpatial((spatial) => {
+            mutateTransform(spatial.transform);
           });
         }}
       />

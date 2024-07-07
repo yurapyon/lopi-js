@@ -14,4 +14,13 @@ export namespace Transform {
       scale: vec3.create(),
     };
   };
+
+  export const toMatrix = (out: mat4, transform: Transform) => {
+    mat4.fromRotationTranslationScale(
+      out,
+      transform.rotation,
+      transform.position,
+      transform.scale
+    );
+  };
 }

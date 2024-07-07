@@ -2,7 +2,7 @@ import { createUniqueId } from "@utils/createUniqueId";
 import { createStore, produce } from "solid-js/store";
 import { Workspace } from "./views/Workspace";
 import { Settings } from "./Settings";
-import { Scene } from "./scene/Scene";
+import { Scene } from "./nodes/scene/Scene";
 import { Editor3d } from "./editors/Editor3d";
 import { EditorUV } from "./editors/EditorUV";
 import { EditorAnimation } from "./editors/EditorAnimation";
