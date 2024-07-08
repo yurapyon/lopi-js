@@ -1,21 +1,28 @@
 import { mat4 } from "gl-matrix";
 import { degreesToRadians } from "@utils/math";
 
-export type CameraType = "perspective" | "orthographic";
+export type ProjectionType = "perspective" | "orthographic";
 
 export interface Camera {
-  type: CameraType;
+  projectionType: ProjectionType;
   fovDegrees: number;
 }
 
 export namespace Camera {
+  export const create = (): Camera => {
+    return {
+      projectionType: "perspective",
+      fovDegrees: 20,
+    };
+  };
+
   export const toMatrix = (
     out: mat4,
     camera: Camera,
     width: number,
     height: number
   ) => {
-    if (camera.type === "perspective") {
+    if (camera.projectionType === "perspective") {
       mat4.perspective(
         out,
         degreesToRadians(camera.fovDegrees),

@@ -1,10 +1,12 @@
-import { SceneCamera } from "@lib/nodes/scene/SceneCamera";
 import { IEditor } from "./Editor";
-import { Scene } from "@lib/nodes/scene/Scene";
 import { Mutator } from "@utils/Mutator";
 import { Events } from "@lib/process/Events";
-import { Spatial } from "@lib/nodes/scene/Spatial";
 import { MouseState } from "@lib/process/events/MouseState";
+import { SceneCamera } from "@lib/data/scene-objects/SceneObject";
+import { Spatial } from "@lib/data/scene-objects/Spatial";
+import { mat4 } from "gl-matrix";
+import { createUniqueId } from "@utils/createUniqueId";
+import { Scene } from "@lib/data/scene-objects/Scene";
 
 export type RenderStyle = "wireframe" | "flat" | "shader";
 
@@ -25,13 +27,18 @@ export namespace Editor3d {
       ...iEditor,
       type: "3d",
       camera: {
-        ...Spatial.create(),
         type: "camera",
+        id: createUniqueId("camera"),
         name: iEditor.id + ":camera",
-        camera: {
-          type: "perspective",
+        data: {
+          projectionType: "perspective",
           fovDegrees: 90,
         },
+        runtime: {
+          worldMatrix: mat4.create(),
+          projectionMatrix: mat4.create(),
+        },
+        spatial: Spatial.create(),
       },
       renderStyle: "flat",
       external: 0,

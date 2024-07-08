@@ -2,10 +2,8 @@ import { Component, Index, Match, Show, Switch } from "solid-js";
 import { CameraInput } from "./3d/CameraInput";
 import { useLopiStoreContext } from "../providers/LopiStoreProvider";
 import { SpatialInput } from "./nodes/scene/SpatialInput";
-import { SceneCamera } from "@lib/nodes/scene/SceneCamera";
-import { Scene } from "@lib/nodes/scene/Scene";
-import { SceneObject } from "@lib/nodes/scene/SceneObject";
-import { Spatial } from "@lib/nodes/scene/Spatial";
+import { Scene } from "@lib/data/scene-objects/Scene";
+import { SceneCamera, SceneObject } from "@lib/data/scene-objects/SceneObject";
 
 export const SceneHeirarchy: Component<{ scene: Scene }> = (props) => {
   const { produceScene } = useLopiStoreContext();
@@ -27,25 +25,29 @@ export const SceneHeirarchy: Component<{ scene: Scene }> = (props) => {
         return (
           <div class="flex flex-col">
             <SpatialInput
-              spatial={sceneObject()}
+              spatial={sceneObject().spatial}
               mutateSpatial={(mutateSpatial) => {
                 produceSceneObject((mutableSceneObject) => {
-                  const spatial = mutableSceneObject as Spatial;
-                  mutateSpatial(spatial);
+                  mutateSpatial(mutableSceneObject.spatial);
+                  if (mutableSceneObject.type === "camera") {
+                    // mutableSceneObject.runtime.viewMatrix
+                  }
                 });
               }}
             />
             <Switch fallback={sceneObject().name}>
               <Match when={sceneObject().type === "camera"}>
                 <CameraInput
-                  camera={(sceneObject() as SceneCamera).camera}
+                  camera={(sceneObject() as SceneCamera).data}
                   onChange={(updateObject) => {
                     produceSceneObject((mutableSceneObject) => {
                       const cameraObject = mutableSceneObject as SceneCamera;
-                      cameraObject.camera = {
-                        ...cameraObject.camera,
+                      cameraObject.data = {
+                        ...cameraObject.data,
                         ...updateObject,
                       };
+                      // cameraObject.runtime.projectionMatrix
+                      // cameraObject.runtime.viewMatrix
                     });
                   }}
                 />

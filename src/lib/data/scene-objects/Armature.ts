@@ -1,5 +1,5 @@
 import { Geometry, Vertex } from "./Geometry";
-import { Transform } from "./Transform";
+import { Transform } from "../math/Transform";
 
 export interface Bone {
   transform: Transform;

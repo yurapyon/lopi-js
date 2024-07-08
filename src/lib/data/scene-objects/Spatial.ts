@@ -1,8 +1,7 @@
-import { Transform } from "@lib/data/3d/Transform";
-import { LopiNode } from "@lib/nodes/LopiNode";
 import { mat4 } from "gl-matrix";
+import { Transform } from "../math/Transform";
 
-export interface Spatial extends LopiNode {
+export interface Spatial {
   parent: Spatial | null;
   children: Spatial[];
   isActive: boolean;
@@ -16,7 +15,6 @@ export namespace Spatial {
     const transform = Transform.identity();
     const worldMatrix = mat4.create();
     return {
-      ...LopiNode.create(),
       parent: null,
       children: [],
       isActive: true,
@@ -27,8 +25,8 @@ export namespace Spatial {
 
   export const setParent = (parent: Spatial, child: Spatial) => {
     if (child.parent) {
-      const childIdx = child.parent.children.findIndex(
-        (sibling) => sibling.id === child.id
+      const childIdx = child.parent.children.findIndex((sibling) =>
+        Object.is(sibling, child)
       );
       child.parent.children.splice(childIdx, 1);
     }

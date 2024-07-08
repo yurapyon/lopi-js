@@ -1,7 +1,7 @@
 import { Component, createSelector } from "solid-js";
 import { Button } from "../../general-ui/Button";
-import { Camera } from "@lib/data/3d/Camera";
 import { ClassProps, setupClassProps } from "@utils/ClassProps";
+import { Camera } from "@lib/data/scene-objects/Camera";
 
 export const CameraInput: Component<
   {
@@ -10,7 +10,7 @@ export const CameraInput: Component<
   } & ClassProps
 > = (props_) => {
   const { props, classes } = setupClassProps(props_);
-  const isSelectedType = createSelector(() => props.camera.type);
+  const isSelectedType = createSelector(() => props.camera.projectionType);
 
   return (
     <div class="flex flex-col" classList={classes}>
@@ -19,7 +19,7 @@ export const CameraInput: Component<
           variant="light"
           onClick={() =>
             props.onChange({
-              type: "perspective",
+              projectionType: "perspective",
             })
           }
           selected={isSelectedType("perspective")}
@@ -30,7 +30,7 @@ export const CameraInput: Component<
           variant="light"
           onClick={() =>
             props.onChange({
-              type: "orthographic",
+              projectionType: "orthographic",
             })
           }
           selected={isSelectedType("orthographic")}

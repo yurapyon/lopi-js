@@ -1,8 +1,7 @@
-import { Camera } from "@lib/data/3d/Camera";
+import { Camera } from "@lib/data/scene-objects/Camera";
+import { Scene } from "@lib/data/scene-objects/Scene";
+import { SceneCamera } from "@lib/data/scene-objects/SceneObject";
 import { Material } from "@lib/gfx/Material";
-import { Scene } from "@lib/nodes/scene/Scene";
-import { SceneCamera } from "@lib/nodes/scene/SceneCamera";
-import { SceneMesh } from "@lib/nodes/scene/SceneMesh";
 import { mat4 } from "gl-matrix";
 
 export interface RenderingContext {
@@ -70,12 +69,12 @@ export namespace Rendering {
 
     RenderingContext.setProjection(
       context,
-      camera.camera,
+      camera.data,
       canvas.width,
       canvas.height
     );
 
-    RenderingContext.setView(context, camera.worldMatrix);
+    RenderingContext.setView(context, camera.runtime.worldMatrix);
 
     const gl = canvas.getContext("webgl2");
     if (!gl) {
@@ -93,10 +92,8 @@ export namespace Rendering {
           break;
         case "empty":
           break;
-        case "mesh":
-          SceneMesh.render(gl, currentObject);
-          break;
-        case "skinned-mesh":
+        case "geometry":
+          // SceneMesh.render(gl, currentObject);
           break;
         case "camera":
           break;

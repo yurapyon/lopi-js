@@ -2,7 +2,7 @@ import { Component, JSX } from "solid-js";
 import { ClassProps, setupClassProps } from "@utils/ClassProps";
 import { Vec3Input } from "../math/Vec3Input";
 import { Mutator } from "@utils/Mutator";
-import { Transform } from "@lib/data/3d/Transform";
+import { Transform } from "@lib/data/math/Transform";
 
 export const TransformInput: Component<
   {

@@ -1,7 +1,7 @@
 import { createUniqueId } from "@utils/createUniqueId";
-import { SceneRoot } from "./SceneRoot";
-import { SceneObject } from "./SceneObject";
+import { SceneObject, SceneRoot } from "./SceneObject";
 import { Spatial } from "./Spatial";
+import { mat4 } from "gl-matrix";
 
 export interface Scene {
   id: string;
@@ -12,15 +12,17 @@ export interface Scene {
 
 export namespace Scene {
   export const create = (): Scene => {
-    const root: SceneRoot = {
-      ...Spatial.create(),
-      type: "root",
-      name: "root",
-    };
     return {
       id: createUniqueId("scene"),
       name: "scene",
-      root,
+      root: {
+        type: "root",
+        id: createUniqueId("root"),
+        name: "root",
+        spatial: Spatial.create(),
+        data: undefined,
+        runtime: { worldMatrix: mat4.create() },
+      },
       sceneObjects: [],
     };
   };

@@ -1,6 +1,6 @@
 import { Component, Setter, createEffect, createSignal } from "solid-js";
 import { View } from "./View";
-import { Workspace } from "@lib/views/View";
+import { Workspace } from "@lib/views/Workspace";
 
 export const WorkspaceComponent: Component<{
   workspace: Workspace;
