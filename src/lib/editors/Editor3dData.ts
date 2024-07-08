@@ -1,56 +1,38 @@
-import { IEditor } from "./Editor";
 import { Mutator } from "@utils/Mutator";
 import { Events } from "@lib/process/Events";
 import { MouseState } from "@lib/process/events/MouseState";
-import { SceneCamera } from "@lib/data/scene-objects/SceneObject";
-import { Spatial } from "@lib/data/scene-objects/Spatial";
-import { mat4 } from "gl-matrix";
-import { createUniqueId } from "@utils/createUniqueId";
-import { Scene } from "@lib/data/scene-objects/Scene";
+import {
+  SceneCamera,
+  SceneObjectBase,
+} from "@lib/data/scene-objects/SceneObject";
+import { vec3 } from "gl-matrix";
+import { Scene } from "@lib/data/Scene";
 
 export type RenderStyle = "wireframe" | "flat" | "shader";
 
-export interface Editor3d extends IEditor {
-  type: "3d";
+export interface Editor3dData {
   camera: SceneCamera;
   renderStyle: RenderStyle;
-  external: number;
-  untracked: {
-    internal: number;
-  };
 }
 
-export namespace Editor3d {
-  export const create = (): Editor3d => {
-    const iEditor = IEditor.create();
+export namespace Editor3dData {
+  export const create = (): Editor3dData => {
     return {
-      ...iEditor,
-      type: "3d",
       camera: {
-        type: "camera",
-        id: createUniqueId("camera"),
-        name: iEditor.id + ":camera",
+        ...SceneObjectBase.create("camera"),
+        name: "editor:camera",
         data: {
           projectionType: "perspective",
           fovDegrees: 90,
         },
-        runtime: {
-          worldMatrix: mat4.create(),
-          projectionMatrix: mat4.create(),
-        },
-        spatial: Spatial.create(),
       },
       renderStyle: "flat",
-      external: 0,
-      untracked: {
-        internal: 0,
-      },
     };
   };
 
   export const processMouseState = (
-    editor3d: Editor3d,
-    mutateEditor: Mutator<Editor3d>,
+    editor3dData: Editor3dData,
+    mutateEditorData: Mutator<Editor3dData>,
     mouseState: MouseState,
     mutateMouseState: Mutator<MouseState>,
     scene: Scene,
@@ -65,6 +47,12 @@ export namespace Editor3d {
         });
       });
     }
+
+    mutateEditorData((editor3dData) => {
+      const newPosition = [...editor3dData.camera.spatial.transform.position];
+      newPosition[0] = mouseState.lastEvent.screenX;
+      editor3dData.camera.spatial.transform.position = newPosition as vec3;
+    });
 
     /*
     const untracked = unwrap(editor3d.untracked);
@@ -89,8 +77,8 @@ export namespace Editor3d {
   };
 
   export const processKeyboardEvent = (
-    editor3d: Editor3d,
-    mutateEditor: Mutator<Editor3d>,
+    editor3dData: Editor3dData,
+    mutateEditorData: Mutator<Editor3dData>,
     e: KeyboardEvent,
     scene: Scene,
     mutateScene: Mutator<Scene>

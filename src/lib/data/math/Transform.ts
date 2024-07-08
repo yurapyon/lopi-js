@@ -23,4 +23,14 @@ export namespace Transform {
       transform.scale
     );
   };
+
+  export const toMatrixRelative = (
+    out: mat4,
+    transform: Transform,
+    relativeTo: mat4
+  ) => {
+    toMatrix(out, transform);
+    // TODO verify multiplication is in the right order
+    mat4.multiply(out, out, relativeTo);
+  };
 }

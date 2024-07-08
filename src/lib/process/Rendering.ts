@@ -1,5 +1,5 @@
 import { Camera } from "@lib/data/scene-objects/Camera";
-import { Scene } from "@lib/data/scene-objects/Scene";
+import { Scene } from "@lib/data/Scene";
 import { SceneCamera } from "@lib/data/scene-objects/SceneObject";
 import { Material } from "@lib/gfx/Material";
 import { mat4 } from "gl-matrix";
@@ -74,7 +74,9 @@ export namespace Rendering {
       canvas.height
     );
 
-    RenderingContext.setView(context, camera.runtime.worldMatrix);
+    RenderingContext.setView(context, camera.spatial.runtime.worldMatrix);
+
+    Scene.updateRuntime(scene);
 
     const gl = canvas.getContext("webgl2");
     if (!gl) {

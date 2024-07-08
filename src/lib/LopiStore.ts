@@ -2,11 +2,8 @@ import { createUniqueId } from "@utils/createUniqueId";
 import { createStore, produce } from "solid-js/store";
 import { Workspace } from "./views/Workspace";
 import { Settings } from "./Settings";
-import { Scene } from "./data/scene-objects/Scene";
-import { Editor3d } from "./editors/Editor3d";
-import { EditorUV } from "./editors/EditorUV";
-import { EditorAnimation } from "./editors/EditorAnimation";
-import { Editor } from "./editors/Editor";
+import { Scene } from "./data/Scene";
+import { Editor, Editor3d, EditorAnimation, EditorUV } from "./editors/Editor";
 
 export interface LopiStoreAPI {
   workspaces: Workspace[];

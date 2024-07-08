@@ -1,4 +1,4 @@
-import { DataObject } from "./DataObject";
+import { DataObject } from "./data-objects/DataObject";
 
 export interface DataSet {
   id: string;

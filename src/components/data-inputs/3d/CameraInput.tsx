@@ -2,11 +2,12 @@ import { Component, createSelector } from "solid-js";
 import { Button } from "../../general-ui/Button";
 import { ClassProps, setupClassProps } from "@utils/ClassProps";
 import { Camera } from "@lib/data/scene-objects/Camera";
+import { Mutator } from "@utils/Mutator";
 
 export const CameraInput: Component<
   {
     camera: Camera;
-    onChange: (updateObject: Partial<Camera>) => void;
+    mutateCamera: Mutator<Camera>;
   } & ClassProps
 > = (props_) => {
   const { props, classes } = setupClassProps(props_);
@@ -18,8 +19,8 @@ export const CameraInput: Component<
         <Button
           variant="light"
           onClick={() =>
-            props.onChange({
-              projectionType: "perspective",
+            props.mutateCamera((camera) => {
+              camera.projectionType = "perspective";
             })
           }
           selected={isSelectedType("perspective")}
@@ -29,8 +30,8 @@ export const CameraInput: Component<
         <Button
           variant="light"
           onClick={() =>
-            props.onChange({
-              projectionType: "orthographic",
+            props.mutateCamera((camera) => {
+              camera.projectionType = "orthographic";
             })
           }
           selected={isSelectedType("orthographic")}

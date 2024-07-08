@@ -1,12 +1,13 @@
 import { Component, Show } from "solid-js";
 import { useLopiStoreContext } from "../providers/LopiStoreProvider";
-import { Editor3d } from "@lib/editors/Editor3d";
 import { Mutator } from "@utils/Mutator";
 import { Rendering } from "@lib/process/Rendering";
 import { Events } from "@lib/process/Events";
 import { useInteractionStateContext } from "../providers/InteractionProvider";
 import { MouseState } from "@lib/process/events/MouseState";
-import { Scene } from "@lib/data/scene-objects/Scene";
+import { Scene } from "@lib/data/Scene";
+import { Editor3d } from "@lib/editors/Editor";
+import { Editor3dData } from "@lib/editors/Editor3dData";
 
 const Editor3dCanvas: Component<{
   editor3d: Editor3d;
@@ -15,11 +16,16 @@ const Editor3dCanvas: Component<{
   mutateScene: Mutator<Scene>;
 }> = (props) => {
   const mouseState = MouseState.createEmpty();
+  const mutateEditor3dData = (mutateFn: (data: Editor3dData) => void) => {
+    props.mutateEditor3d((editor3d) => {
+      mutateFn(editor3d.data);
+    });
+  };
   const onMouse = (e: MouseEvent) => {
     Events.processMouseEvent(mouseState, e);
-    Editor3d.processMouseState(
-      props.editor3d,
-      props.mutateEditor3d,
+    Editor3dData.processMouseState(
+      props.editor3d.data,
+      mutateEditor3dData,
       mouseState,
       (mutateFn) => {
         mutateFn(mouseState);
@@ -29,9 +35,9 @@ const Editor3dCanvas: Component<{
     );
   };
   const onKey = (e: KeyboardEvent) => {
-    Editor3d.processKeyboardEvent(
-      props.editor3d,
-      props.mutateEditor3d,
+    Editor3dData.processKeyboardEvent(
+      props.editor3d.data,
+      mutateEditor3dData,
       e,
       props.scene,
       props.mutateScene
@@ -49,7 +55,7 @@ const Editor3dCanvas: Component<{
               // TODO error
               throw "error";
             }
-            Rendering.render(eCanvas, props.scene, props.editor3d.camera);
+            Rendering.render(eCanvas, props.scene, props.editor3d.data.camera);
           });
         }
       }}
@@ -75,7 +81,7 @@ export const Editor3dComponent: Component<{
 
   return (
     <div class="flex flex-col h-full">
-      {props.editor.external}
+      {props.editor.data.camera.spatial.transform.position[0]}
       <Show when={selectedSceneId()} fallback={"no scene selected"} keyed>
         {(currentSceneId) => {
           const scene = getScene(currentSceneId);

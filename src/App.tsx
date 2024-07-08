@@ -15,9 +15,10 @@ import { Workspaces } from "./components/workspaces/Workspaces";
 import { useLopiStoreContext } from "./components/providers/LopiStoreProvider";
 import { useInteractionStateContext } from "./components/providers/InteractionProvider";
 import { DataLists } from "./components/data-inputs/DataLists";
-import { Editor3d } from "@lib/editors/Editor3d";
-import { Scene } from "@lib/data/scene-objects/Scene";
+import { Scene } from "@lib/data/Scene";
 import { Spatial } from "@lib/data/scene-objects/Spatial";
+import { Editor3d, EditorBase } from "@lib/editors/Editor";
+import { Editor3dData } from "@lib/editors/Editor3dData";
 
 const App: Component = () => {
   const [enteringCommand, setEnteringCommand] = createSignal(false);
@@ -31,9 +32,12 @@ const App: Component = () => {
     internalScene.name = "internal";
     store.addScene(internalScene);
 
-    const e3d = Editor3d.create();
-    Spatial.setParent(internalScene.root.spatial, e3d.camera.spatial);
-    internalScene.sceneObjects.push(e3d.camera);
+    const e3d: Editor3d = {
+      ...EditorBase.create("3d"),
+      data: Editor3dData.create(),
+    };
+    Spatial.setParent(internalScene.root.spatial, e3d.data.camera.spatial);
+    internalScene.sceneObjects.push(e3d.data.camera);
     const e_id = store.addEditor(e3d);
     setSelectedEditorId(e_id);
 

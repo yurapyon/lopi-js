@@ -6,20 +6,24 @@ export interface Spatial {
   children: Spatial[];
   isActive: boolean;
   transform: Transform;
-  // NOTE this should be be kept in sync with transform.matrix
-  worldMatrix: mat4;
+  runtime: {
+    isActiveRelative: boolean;
+    worldMatrix: mat4;
+  };
 }
 
 export namespace Spatial {
   export const create = (): Spatial => {
     const transform = Transform.identity();
-    const worldMatrix = mat4.create();
     return {
       parent: null,
       children: [],
       isActive: true,
       transform,
-      worldMatrix,
+      runtime: {
+        isActiveRelative: true,
+        worldMatrix: mat4.create(),
+      },
     };
   };
 
@@ -35,13 +39,17 @@ export namespace Spatial {
     child.parent = parent;
   };
 
-  export const updateWorldMatrix = (spatial: Spatial, tempMat4: mat4) => {
+  export const updateRuntime = (spatial: Spatial) => {
     if (spatial.parent) {
-      Transform.toMatrix(tempMat4, spatial.transform);
-      // TODO verify multiplication is in the right order
-      mat4.multiply(spatial.worldMatrix, spatial.parent.worldMatrix, tempMat4);
+      Transform.toMatrixRelative(
+        spatial.runtime.worldMatrix,
+        spatial.transform,
+        spatial.parent.runtime.worldMatrix
+      );
+      spatial.runtime.isActiveRelative =
+        spatial.parent.runtime.isActiveRelative;
     } else {
-      Transform.toMatrix(spatial.worldMatrix, spatial.transform);
+      Transform.toMatrix(spatial.runtime.worldMatrix, spatial.transform);
     }
   };
 }

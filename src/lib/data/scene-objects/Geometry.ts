@@ -1,3 +1,4 @@
+import { Mesh } from "@lib/gfx/Mesh";
 import { vec3 } from "gl-matrix";
 
 export interface Vertex {
@@ -112,6 +113,9 @@ export interface Geometry {
   edges: Edge[];
   tris: TriWithUVs[];
   uvMapIds: string[];
+  runtime: {
+    mesh: Mesh;
+  };
 }
 
 export namespace Geometry {

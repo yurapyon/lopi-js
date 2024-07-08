@@ -12,7 +12,7 @@ export namespace Camera {
   export const create = (): Camera => {
     return {
       projectionType: "perspective",
-      fovDegrees: 20,
+      fovDegrees: 90,
     };
   };
 

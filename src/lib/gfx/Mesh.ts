@@ -1,4 +1,4 @@
-import { Geometry } from "@lib/data/3d/Geometry";
+import { Geometry } from "@lib/data/scene-objects/Geometry";
 import { GL } from "./GL";
 
 const vertex3dVertexAttributes = [
