@@ -1,8 +1,8 @@
 import { Component } from "solid-js";
 import { ClassProps, setupClassProps } from "@utils/ClassProps";
-import { TransformInput } from "../../3d/TransformInput";
 import { Mutator } from "@utils/Mutator";
 import { Spatial } from "@lib/data/scene-objects/Spatial";
+import { TransformInput } from "../math/TransformInput";
 
 export const SpatialInput: Component<
   {

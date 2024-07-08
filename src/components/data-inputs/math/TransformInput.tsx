@@ -1,6 +1,6 @@
 import { Component, JSX } from "solid-js";
 import { ClassProps, setupClassProps } from "@utils/ClassProps";
-import { Vec3Input } from "../math/Vec3Input";
+import { Vec3Input } from "./Vec3Input";
 import { Mutator } from "@utils/Mutator";
 import { Transform } from "@lib/data/math/Transform";
 

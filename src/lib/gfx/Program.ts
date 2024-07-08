@@ -1,6 +1,6 @@
 import { GL } from "@lib/gfx/GL";
 
-export interface Material {
+export interface Program {
   program: WebGLProgram;
   locations: {
     model: WebGLUniformLocation | null;
@@ -9,12 +9,12 @@ export interface Material {
   };
 }
 
-export namespace Material {
+export namespace Program {
   export const create = (
     gl: WebGL2RenderingContext,
     vertString: string,
     fragString: string
-  ): Material => {
+  ): Program => {
     const program = GL.makeProgram(gl, vertString, fragString);
     if (!program) {
       // TODO error handling

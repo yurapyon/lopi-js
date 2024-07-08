@@ -1,8 +1,8 @@
 import { Camera } from "@lib/data/scene-objects/Camera";
 import { Scene } from "@lib/data/Scene";
 import { SceneCamera } from "@lib/data/scene-objects/SceneObject";
-import { Material } from "@lib/gfx/Material";
 import { mat4 } from "gl-matrix";
+import { Program } from "@lib/gfx/Program";
 
 export interface RenderingContext {
   projectionMatrix: mat4;
@@ -39,19 +39,19 @@ export namespace Rendering {
     */
   };
 
-  const useMaterial = (
+  const useProgram = (
     gl: WebGL2RenderingContext,
-    material: Material,
+    program: Program,
     renderingContext: RenderingContext
   ) => {
-    gl.useProgram(material.program);
+    gl.useProgram(program.program);
     gl.uniformMatrix4fv(
-      material.locations.projection,
+      program.locations.projection,
       false,
       renderingContext.projectionMatrix
     );
     gl.uniformMatrix4fv(
-      material.locations.view,
+      program.locations.view,
       false,
       renderingContext.viewMatrix
     );

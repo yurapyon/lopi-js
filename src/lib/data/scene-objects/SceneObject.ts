@@ -2,8 +2,9 @@ import { Camera } from "./Camera";
 import { Geometry } from "./Geometry";
 import { Spatial } from "./Spatial";
 import { LopiNode } from "../LopiNode";
-import { mat4 } from "gl-matrix";
 import { createUniqueId } from "@utils/createUniqueId";
+import { SkinnedGeometry } from "./SkinnedGeometry";
+import { Armature, Bone } from "./Armature";
 
 interface SceneObjectBase<T extends string, Data> extends LopiNode<T, Data> {
   spatial: Spatial;
@@ -13,8 +14,21 @@ export type SceneRoot = SceneObjectBase<"root", undefined>;
 export type SceneEmpty = SceneObjectBase<"empty", {}>;
 export type SceneCamera = SceneObjectBase<"camera", Camera>;
 export type SceneGeometry = SceneObjectBase<"geometry", Geometry>;
+export type SceneSkinnedGeometry = SceneObjectBase<
+  "skinned-geometry",
+  SkinnedGeometry
+>;
+export type SceneArmature = SceneObjectBase<"armature", Armature>;
+export type SceneBone = SceneObjectBase<"bone", Bone>;
 
-export type SceneObject = SceneRoot | SceneEmpty | SceneCamera | SceneGeometry;
+export type SceneObject =
+  | SceneRoot
+  | SceneEmpty
+  | SceneCamera
+  | SceneGeometry
+  | SceneSkinnedGeometry
+  | SceneArmature
+  | SceneBone;
 export type SceneObjectType = SceneObject["type"];
 
 export namespace SceneObjectBase {
