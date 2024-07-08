@@ -47,9 +47,20 @@ export namespace Spatial {
         spatial.parent.runtime.worldMatrix
       );
       spatial.runtime.isActiveRelative =
-        spatial.parent.runtime.isActiveRelative;
+        spatial.isActive && spatial.parent.runtime.isActiveRelative;
     } else {
       Transform.toMatrix(spatial.runtime.worldMatrix, spatial.transform);
+      spatial.runtime.isActiveRelative = spatial.isActive;
+    }
+  };
+
+  export const updateRuntimeRecursive = (spatial: Spatial) => {
+    const queue: Spatial[] = [];
+    let current: Spatial | undefined = spatial;
+    while (current) {
+      Spatial.updateRuntime(current);
+      queue.push(...current.children);
+      current = queue.shift();
     }
   };
 }

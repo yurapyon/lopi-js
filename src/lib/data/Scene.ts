@@ -4,7 +4,6 @@ import {
   SceneObjectBase,
   SceneRoot,
 } from "./scene-objects/SceneObject";
-import { Spatial } from "./scene-objects/Spatial";
 
 export interface Scene {
   id: string;
@@ -25,15 +24,5 @@ export namespace Scene {
       },
       sceneObjects: [],
     };
-  };
-
-  export const updateRuntime = (scene: Scene) => {
-    const queue: Spatial[] = [];
-    let current: Spatial | undefined = scene.root.spatial;
-    while (current) {
-      Spatial.updateRuntime(current);
-      queue.push(...current.children);
-      current = queue.shift();
-    }
   };
 }

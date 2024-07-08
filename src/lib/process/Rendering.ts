@@ -3,6 +3,7 @@ import { Scene } from "@lib/data/Scene";
 import { SceneCamera } from "@lib/data/scene-objects/SceneObject";
 import { mat4 } from "gl-matrix";
 import { Program } from "@lib/gfx/Program";
+import { Spatial } from "@lib/data/scene-objects/Spatial";
 
 export interface RenderingContext {
   projectionMatrix: mat4;
@@ -76,7 +77,7 @@ export namespace Rendering {
 
     RenderingContext.setView(context, camera.spatial.runtime.worldMatrix);
 
-    Scene.updateRuntime(scene);
+    Spatial.updateRuntimeRecursive(scene.root.spatial);
 
     const gl = canvas.getContext("webgl2");
     if (!gl) {
