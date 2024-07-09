@@ -1,12 +1,6 @@
 import { MouseState } from "./events/MouseState";
 
 export namespace Events {
-  export const processMouseEvent = (mouseState: MouseState, e: MouseEvent) => {
-    mouseState.lastEvent = e;
-    mouseState.virtualX += e.movementX;
-    mouseState.virtualY += e.movementY;
-  };
-
   export const startPointerLock = (
     mouseState: MouseState,
     element: HTMLElement,

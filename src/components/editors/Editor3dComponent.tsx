@@ -2,12 +2,12 @@ import { Component, Show } from "solid-js";
 import { useLopiStoreContext } from "../providers/LopiStoreProvider";
 import { Mutator } from "@utils/Mutator";
 import { Rendering } from "@lib/process/Rendering";
-import { Events } from "@lib/process/Events";
 import { useInteractionStateContext } from "../providers/InteractionProvider";
 import { MouseState } from "@lib/process/events/MouseState";
 import { Scene } from "@lib/data/Scene";
 import { Editor3d } from "@lib/editors/Editor";
 import { Editor3dData } from "@lib/editors/Editor3dData";
+import { vec2 } from "gl-matrix";
 
 const Editor3dCanvas: Component<{
   editor3d: Editor3d;
@@ -22,7 +22,7 @@ const Editor3dCanvas: Component<{
     });
   };
   const onMouse = (e: MouseEvent) => {
-    Events.processMouseEvent(mouseState, e);
+    MouseState.processMouseEvent(mouseState, e);
     Editor3dData.processMouseState(
       props.editor3d.data,
       mutateEditor3dData,
@@ -81,7 +81,6 @@ export const Editor3dComponent: Component<{
 
   return (
     <div class="flex flex-col h-full">
-      {props.editor.data.camera.spatial.transform.position[0]}
       <Show when={selectedSceneId()} fallback={"no scene selected"} keyed>
         {(currentSceneId) => {
           const scene = getScene(currentSceneId);

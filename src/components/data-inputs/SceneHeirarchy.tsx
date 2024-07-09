@@ -2,8 +2,9 @@ import { Component, Index, Match, Show, Switch } from "solid-js";
 import { CameraInput } from "./scene-objects/CameraInput";
 import { useLopiStoreContext } from "../providers/LopiStoreProvider";
 import { Scene } from "@lib/data/Scene";
-import { SceneCamera, SceneObject } from "@lib/data/scene-objects/SceneObject";
+import { SceneObject } from "@lib/data/scene-objects/SceneObject";
 import { SpatialInput } from "./scene-objects/SpatialInput";
+import { SceneCamera } from "@lib/data/scene-objects/SceneCamera";
 
 export const SceneHeirarchy: Component<{ scene: Scene }> = (props) => {
   const { produceScene } = useLopiStoreContext();

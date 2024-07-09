@@ -1,18 +1,18 @@
-import { Camera } from "./Camera";
 import { Geometry } from "./Geometry";
 import { Spatial } from "./Spatial";
 import { LopiNode } from "../LopiNode";
 import { createUniqueId } from "@utils/createUniqueId";
 import { SkinnedGeometry } from "./SkinnedGeometry";
 import { Armature, Bone } from "./Armature";
+import { SceneCamera } from "./SceneCamera";
 
-interface SceneObjectBase<T extends string, Data> extends LopiNode<T, Data> {
+export interface SceneObjectBase<T extends string, Data>
+  extends LopiNode<T, Data> {
   spatial: Spatial;
 }
 
 export type SceneRoot = SceneObjectBase<"root", undefined>;
 export type SceneEmpty = SceneObjectBase<"empty", {}>;
-export type SceneCamera = SceneObjectBase<"camera", Camera>;
 export type SceneGeometry = SceneObjectBase<"geometry", Geometry>;
 export type SceneSkinnedGeometry = SceneObjectBase<
   "skinned-geometry",

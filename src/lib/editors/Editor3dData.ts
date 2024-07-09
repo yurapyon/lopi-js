@@ -1,12 +1,10 @@
 import { Mutator } from "@utils/Mutator";
 import { Events } from "@lib/process/Events";
 import { MouseState } from "@lib/process/events/MouseState";
-import {
-  SceneCamera,
-  SceneObjectBase,
-} from "@lib/data/scene-objects/SceneObject";
-import { vec3 } from "gl-matrix";
+import { SceneObjectBase } from "@lib/data/scene-objects/SceneObject";
+import { vec2, vec3 } from "gl-matrix";
 import { Scene } from "@lib/data/Scene";
+import { SceneCamera } from "@lib/data/scene-objects/SceneCamera";
 
 export type RenderStyle = "wireframe" | "flat" | "shader";
 
@@ -30,6 +28,8 @@ export namespace Editor3dData {
     };
   };
 
+  const tempVec2 = vec2.create();
+
   export const processMouseState = (
     editor3dData: Editor3dData,
     mutateEditorData: Mutator<Editor3dData>,
@@ -38,6 +38,9 @@ export namespace Editor3dData {
     scene: Scene,
     mutateScene: Mutator<Scene>
   ) => {
+    MouseState.positionInLastElement(tempVec2, mouseState);
+    // console.log(tempVec2);
+
     const lastEvent = mouseState.lastEvent;
     if (lastEvent.type === "mousedown") {
       const eCanvas = lastEvent.target as HTMLCanvasElement;
