@@ -1,4 +1,4 @@
-import { Geometry } from "@lib/data/scene-objects/Geometry";
+import { Model } from "@lib/data/scene-objects/Geometry";
 import { GL } from "./GL";
 
 const vertex3dVertexAttributes = [
@@ -16,9 +16,9 @@ export interface Mesh {
 }
 
 export namespace Mesh {
-  export const createFromGeometry = (
+  export const createFromModel = (
     gl: WebGL2RenderingContext,
-    geometry: Geometry
+    model: Model
   ): Mesh => {
     const vao = gl.createVertexArray();
     const vbo = gl.createBuffer();
@@ -42,7 +42,7 @@ export namespace Mesh {
       vao,
       vbo,
       indices,
-      triCount: geometry.tris.length,
+      triCount: model.geometry.tris.length,
     };
   };
 }

@@ -25,11 +25,10 @@ in-app ways to get around needing to save to desktop
     shaders with live inputs
     scene management
 
-! we don't want to reinvent peoples external tools in our own app !
-  that sucks and makes the app feel cheap
+don't want to reinvent external tools
+  generally feels cheap
+  being a web app though it does help if people dont have to save things to disk
 
-for heiarchy can just go through editors and add 3d editor cameras to a separate section
-    
 ---
 
 what if you could draw UVs separately and assign them to faces
