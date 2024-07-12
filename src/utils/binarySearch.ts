@@ -33,57 +33,36 @@ export interface Segment<T> {
   nextIndex: number | null;
 }
 
-export function getSegment<T>(
-  array: T[],
-  compareFn: (testValue: T) => number
-): Segment<T> {
-  const index = binarySearch(array, compareFn);
-  const foundExactly = compareFn(array[index]) === 0;
+export namespace Segment {
+  export function fromArray<T>(
+    array: T[],
+    compareFn: (testValue: T) => number
+  ): Segment<T> {
+    const index = binarySearch(array, compareFn);
+    const foundExactly = compareFn(array[index]) === 0;
 
-  if (foundExactly) {
-    const previousIndex = index;
-    let nextIndex: number | null = previousIndex + 1;
-    if (nextIndex >= array.length) {
-      nextIndex = null;
-    }
-    return {
-      previousIndex,
-      nextIndex,
-    };
-  } else {
-    if (index === 0) {
+    if (foundExactly) {
+      const previousIndex = index;
+      let nextIndex: number | null = previousIndex + 1;
+      if (nextIndex >= array.length) {
+        nextIndex = null;
+      }
       return {
-        previousIndex: null,
-        nextIndex: 0,
+        previousIndex,
+        nextIndex,
       };
     } else {
-      return {
-        previousIndex: index - 1,
-        nextIndex: index < array.length ? index : null,
-      };
+      if (index === 0) {
+        return {
+          previousIndex: null,
+          nextIndex: 0,
+        };
+      } else {
+        return {
+          previousIndex: index - 1,
+          nextIndex: index < array.length ? index : null,
+        };
+      }
     }
   }
 }
-
-export const algoTest = () => {
-  const arr = [1, 2, 3, 4, 5, 6];
-  let find = 4;
-  const testSearch = () => {
-    console.log(
-      arr,
-      find,
-      getSegment(arr, (testValue) => {
-        return find - testValue;
-      })
-    );
-  };
-  testSearch();
-  find = 4.5;
-  testSearch();
-  find = 0;
-  testSearch();
-  find = 1;
-  testSearch();
-  find = 6;
-  testSearch();
-};

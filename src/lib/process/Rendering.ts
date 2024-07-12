@@ -1,9 +1,9 @@
 import { Camera } from "@lib/data/scene-objects/Camera";
 import { Scene } from "@lib/data/Scene";
-import { SceneCamera } from "@lib/data/scene-objects/SceneObject";
 import { mat4 } from "gl-matrix";
 import { Program } from "@lib/gfx/Program";
 import { Spatial } from "@lib/data/scene-objects/Spatial";
+import { SceneCamera } from "@lib/data/scene-objects/SceneCamera";
 
 export interface RenderingContext {
   projectionMatrix: mat4;

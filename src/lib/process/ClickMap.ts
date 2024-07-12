@@ -1,12 +1,14 @@
 import { Vertex } from "@lib/data/math/geometry/Vertex";
-import { Camera } from "@lib/data/scene-objects/Camera";
 import { Geometry } from "@lib/data/scene-objects/Geometry";
 import { SceneCamera } from "@lib/data/scene-objects/SceneCamera";
 import { SceneGeometry } from "@lib/data/scene-objects/SceneObject";
+import {
+  centroidOfTriangle,
+  lineSegmentIntersectsCircle,
+  pointInsersectsCircle,
+  pointIntersectsTriangle,
+} from "@utils/math";
 import { mat4, vec2 } from "gl-matrix";
-
-const VERTEX_CLICK_RADIUS = 5;
-const EDGE_CLICK_RADIUS = 5;
 
 interface VertexRegion {
   index: number;
@@ -24,12 +26,14 @@ interface TriRegion {
   positionA: vec2;
   positionB: vec2;
   positionC: vec2;
+  centroid: vec2 | null;
 }
 
 export interface ClickMap {
   vertices: VertexRegion[];
   edges: EdgeRegion[];
   tris: TriRegion[];
+  useTriCentroids: boolean;
 }
 
 // TODO
@@ -43,7 +47,20 @@ export interface ClickIntersection {
 }
 
 export namespace ClickMap {
-  const fromGeometry = (out: ClickMap, geometry: Geometry) => {
+  export const create = (): ClickMap => {
+    return {
+      vertices: [],
+      edges: [],
+      tris: [],
+      useTriCentroids: false,
+    };
+  };
+
+  const fromGeometry = (
+    out: ClickMap,
+    geometry: Geometry,
+    useTriCentroids: boolean
+  ) => {
     out.vertices = geometry.vertices.map((vertex, i) => ({
       index: i,
       position: vertex.runtime.screenCoords,
@@ -55,12 +72,22 @@ export namespace ClickMap {
       positionB: edge[1].runtime.screenCoords,
     }));
 
-    out.tris = geometry.tris.map((tri, i) => ({
-      index: i,
-      positionA: tri[0].runtime.screenCoords,
-      positionB: tri[1].runtime.screenCoords,
-      positionC: tri[2].runtime.screenCoords,
-    }));
+    out.tris = geometry.tris.map((tri, i) => {
+      const positionA = tri[0].runtime.screenCoords;
+      const positionB = tri[1].runtime.screenCoords;
+      const positionC = tri[2].runtime.screenCoords;
+      return {
+        index: i,
+        positionA,
+        positionB,
+        positionC,
+        centroid: useTriCentroids
+          ? centroidOfTriangle(positionA, positionB, positionC)
+          : null,
+      };
+    });
+
+    out.useTriCentroids = useTriCentroids;
   };
 
   export const generateFromSceneCamera = (
@@ -69,11 +96,12 @@ export namespace ClickMap {
     sceneCamera: SceneCamera,
     width: number,
     height: number,
-    options: {
+    options?: {
       // TODO is this possible or necessary
-      frustrumCulling: boolean;
+      frustrumCulling?: boolean;
       // TODO do this somehow
-      occlusionCulling: boolean;
+      occlusionCulling?: boolean;
+      useTriCentroids?: boolean;
     }
   ) => {
     const mpvMatrix = mat4.create();
@@ -89,7 +117,7 @@ export namespace ClickMap {
       Vertex.updateRuntime(vertex, mpvMatrix);
     });
 
-    fromGeometry(out, sceneGeometry.data);
+    fromGeometry(out, sceneGeometry.data, !!options?.useTriCentroids);
   };
 
   export const generateFromZeroToOne = (
@@ -97,7 +125,7 @@ export namespace ClickMap {
     sceneGeometry: SceneGeometry,
     width: number,
     height: number,
-    options: {}
+    options?: { useTriCentroids?: boolean }
   ) => {
     // TODO set up mpv matrix
     const mpvMatrix = mat4.create();
@@ -106,22 +134,43 @@ export namespace ClickMap {
       Vertex.updateRuntime(vertex, mpvMatrix);
     });
 
-    fromGeometry(out, sceneGeometry.data);
+    fromGeometry(out, sceneGeometry.data, !!options?.useTriCentroids);
   };
 
-  export const pointIntersects = (clickMap: ClickMap, point: vec2) => {
+  export const pointIntersects = (
+    clickMap: ClickMap,
+    point: vec2,
+    options?: {
+      clickRadii?: {
+        vertex?: number;
+        edge?: number;
+        centroid?: number;
+      };
+    }
+  ) => {
+    const DEFAULT_VERTEX_CLICK_RADIUS = 5;
+    const DEFAULT_EDGE_CLICK_RADIUS = 5;
+    const DEFAULT_TRI_CENTROID_CLICK_RADIUS = DEFAULT_VERTEX_CLICK_RADIUS;
+
     // TODO could use an octree but maybe not needed
     const vertexIntersctions: ClickIntersection[] = clickMap.vertices
       .filter((vertex) => {
-        vec2.distance(vertex.position, point) < VERTEX_CLICK_RADIUS;
+        return pointInsersectsCircle(
+          vertex.position,
+          point,
+          options?.clickRadii?.vertex || DEFAULT_VERTEX_CLICK_RADIUS
+        );
       })
       .map((vertexRegion) => ({ type: "vertex", index: vertexRegion.index }));
 
     const edgeIntersections: ClickIntersection[] = clickMap.edges
       .filter((edge) => {
-        // TODO
-        // 'line intersects circle' might be easier than 'point intersects cylinder'
-        return false;
+        return lineSegmentIntersectsCircle(
+          edge.positionA,
+          edge.positionB,
+          point,
+          options?.clickRadii?.edge || DEFAULT_EDGE_CLICK_RADIUS
+        );
       })
       .map((edgeRegion) => ({
         type: "edge",
@@ -130,9 +179,21 @@ export namespace ClickMap {
 
     const triIntersections: ClickIntersection[] = clickMap.tris
       .filter((tri) => {
-        // TODO
-        // check point in tri
-        return false;
+        if (clickMap.useTriCentroids) {
+          return pointInsersectsCircle(
+            // NOTE, enforcing it isnt null
+            tri.centroid!,
+            point,
+            options?.clickRadii?.centroid || DEFAULT_TRI_CENTROID_CLICK_RADIUS
+          );
+        } else {
+          return pointIntersectsTriangle(
+            point,
+            tri.positionA,
+            tri.positionB,
+            tri.positionC
+          );
+        }
       })
       .map((triRegion) => ({ type: "tri", index: triRegion.index }));
 

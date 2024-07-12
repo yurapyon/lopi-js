@@ -1,4 +1,4 @@
-import { Segment, binarySearch, getSegment } from "@utils/binarySearch";
+import { Segment } from "@utils/binarySearch";
 
 export interface Keyframe<T> {
   index: number;
@@ -52,7 +52,7 @@ export type Animation = NumberAnimation | CameraAnimation;
 export namespace Animation {
   export function jumpTo(animation: Animation, frameAt: number) {
     animation.runtime.frameAt = frameAt;
-    const segment = getSegment(animation.keyframes, (testValue) => {
+    const segment = Segment.fromArray(animation.keyframes, (testValue) => {
       return frameAt - testValue.index;
     });
     animation.runtime.lastSegment = segment;
