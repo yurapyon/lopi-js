@@ -1,0 +1,20 @@
+lopi
+
+a 3d editor for 2d artists
+
+goals:
+  blender but easy
+  useful for gamedev as well
+
+features:
+  in progress
+
+roadmap:
+  everything
+
+runs on:
+  solid.js
+  vite
+  typescript
+
+MIT
