@@ -19,6 +19,7 @@ import { Scene } from "@lib/data/Scene";
 import { Spatial } from "@lib/data/scene-objects/Spatial";
 import { Editor3d, EditorBase } from "@lib/editors/Editor";
 import { Editor3dData } from "@lib/editors/Editor3dData";
+import { AppLoop } from "@lib/process/AppLoop";
 
 const App: Component = () => {
   const [enteringCommand, setEnteringCommand] = createSignal(false);
@@ -28,6 +29,11 @@ const App: Component = () => {
     useInteractionStateContext();
 
   onMount(() => {
+    AppLoop.startLoop();
+    // AppLoop.addCallback((dt) => {
+    // console.log(dt);
+    // });
+
     const internalScene = Scene.create();
     internalScene.name = "internal";
     store.addScene(internalScene);
